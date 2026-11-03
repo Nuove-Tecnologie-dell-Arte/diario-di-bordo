@@ -38,7 +38,7 @@ def _percorso(nome: str, predefinito: str) -> Path:
 
 # --- Webserver ---
 HOST = os.environ.get("DIARIO_HOST", "127.0.0.1")
-PORT = _int("DIARIO_PORT", 8090)
+PORT = _int("DIARIO_PORT", 8007)
 PUBLIC_DIR = ROOT / "public"
 
 # Se true, l'IP del visitatore si legge dagli header del proxy

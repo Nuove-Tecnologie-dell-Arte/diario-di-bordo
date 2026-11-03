@@ -1,17 +1,23 @@
-# Unit systemd utente per il Diario di bordo.
-# Installazione (sul WSL di computersopra, da dentro la cartella del progetto):
-#   mkdir -p ~/.config/systemd/user
-#   sed "s|@CARTELLA@|$PWD|" scripts/diario-di-bordo.service > ~/.config/systemd/user/diario-di-bordo.service
-#   systemctl --user daemon-reload && systemctl --user enable --now diario-di-bordo
+# Unit systemd del Diario di bordo su computersopra (stesso schema di
+# oracolo, officina-bolle, atlante-fenotipico).
+# Installazione:
+#   sudo cp scripts/diario-di-bordo.service /etc/systemd/system/
+#   sudo systemctl daemon-reload && sudo systemctl enable --now diario-di-bordo
 [Unit]
-Description=Diario di bordo (webserver)
+Description=Diario di bordo (porta 8007)
 After=network-online.target
+Wants=network-online.target
 
 [Service]
-WorkingDirectory=@CARTELLA@
+User=ubuntusopra
+WorkingDirectory=/home/ubuntusopra/Projects/diario-di-bordo
+# Porta e host qui; il resto (chiave export, limiti) in .env nella cartella.
+Environment=DIARIO_HOST=127.0.0.1
+Environment=DIARIO_PORT=8007
+Environment=PYTHONUNBUFFERED=1
 ExecStart=/usr/bin/python3 -m diario serve
 Restart=always
 RestartSec=5
 
 [Install]
-WantedBy=default.target
+WantedBy=multi-user.target

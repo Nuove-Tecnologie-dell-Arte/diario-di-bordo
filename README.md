@@ -12,7 +12,7 @@ Serve solo Python 3.10+, senza pacchetti da installare.
 
 ```bash
 cp .env.example .env        # poi impostare almeno DIARIO_EXPORT_API_KEY
-python3 -m diario           # serve il sito su http://127.0.0.1:8090/
+python3 -m diario           # serve il sito su http://127.0.0.1:8007/
 python3 -m diario esporta   # stampa tutto il DB in JSON (backup)
 ```
 
