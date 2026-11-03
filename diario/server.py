@@ -1,0 +1,209 @@
+"""Webserver del Diario di bordo: solo libreria standard (`http.server`).
+
+Pagine statiche da `public/`, più queste API JSON:
+
+    GET  /api/categorie                 elenco categorie con conteggi
+    GET  /api/pensieri?categoria=&cerca=&pagina=&per_pagina=
+                                        archivio paginato, dal più recente
+    POST /api/pensieri                  {testo, categoria, sito}  (sito = campo esca)
+    GET  /api/export?dal_id=N           tutto per altri progetti (header X-Api-Key)
+    GET  /api/health                    stato del servizio
+"""
+
+import hmac
+import json
+import mimetypes
+import sys
+from http import HTTPStatus
+from http.cookies import SimpleCookie
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+from urllib.parse import parse_qs, urlparse
+
+from diario import config, db, limiti
+
+MAX_CORPO = 32 * 1024
+mimetypes.add_type("font/woff2", ".woff2")
+PAGINE = {"/": "index.html", "/archivio": "archivio.html"}
+
+
+def _int(valore: str | None, predefinito: int, minimo: int, massimo: int) -> int:
+    try:
+        return min(max(int(valore), minimo), massimo)
+    except (TypeError, ValueError):
+        return predefinito
+
+
+class Gestore(BaseHTTPRequestHandler):
+    server_version = "DiarioDiBordo/1.0"
+
+    # --- utilità -------------------------------------------------------
+
+    def log_message(self, formato, *args):  # niente IP nei log
+        sys.stderr.write(f"[{self.log_date_time_string()}] {formato % args}\n")
+
+    def _ip(self) -> str:
+        diretto = self.client_address[0]
+        if config.TRUST_PROXY and diretto in ("127.0.0.1", "::1"):
+            cf = self.headers.get("CF-Connecting-IP")
+            if cf:
+                return cf.strip()
+            xff = self.headers.get("X-Forwarded-For")
+            if xff:
+                return xff.split(",")[0].strip()
+        return diretto
+
+    def _gettone(self) -> str | None:
+        cookie = SimpleCookie()
+        try:
+            cookie.load(self.headers.get("Cookie", ""))
+        except Exception:
+            return None
+        m = cookie.get(limiti.NOME_COOKIE)
+        return m.value if m else None
+
+    def _intestazioni_sicurezza(self) -> None:
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Referrer-Policy", "same-origin")
+        self.send_header("X-Frame-Options", "DENY")
+
+    def _json(self, stato: int, dati, extra: dict | None = None) -> None:
+        corpo = json.dumps(dati, ensure_ascii=False).encode("utf-8")
+        self.send_response(stato)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Content-Length", str(len(corpo)))
+        self.send_header("Cache-Control", "no-store")
+        self._intestazioni_sicurezza()
+        for k, v in (extra or {}).items():
+            self.send_header(k, v)
+        self.end_headers()
+        self.wfile.write(corpo)
+
+    def _errore(self, stato: int, messaggio: str) -> None:
+        self._json(stato, {"errore": messaggio})
+
+    def _file(self, percorso: Path) -> None:
+        tipo = mimetypes.guess_type(percorso.name)[0] or "application/octet-stream"
+        if tipo.startswith("text/") or tipo in ("application/javascript", "application/json"):
+            tipo += "; charset=utf-8"
+        corpo = percorso.read_bytes()
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", tipo)
+        self.send_header("Content-Length", str(len(corpo)))
+        self._intestazioni_sicurezza()
+        if percorso.suffix == ".html":
+            self.send_header("Cache-Control", "no-cache")
+            # Ogni pagina consegna un gettone se il browser non ne ha uno valido.
+            if limiti.leggi_gettone(self._gettone()) is None:
+                self.send_header(
+                    "Set-Cookie",
+                    f"{limiti.NOME_COOKIE}={limiti.nuovo_gettone()}; Path=/; "
+                    f"Max-Age={limiti.DURATA_COOKIE_S}; HttpOnly; SameSite=Strict",
+                )
+        elif percorso.suffix == ".woff2":
+            self.send_header("Cache-Control", "public, max-age=31536000, immutable")
+        else:
+            self.send_header("Cache-Control", "public, max-age=300")
+        self.end_headers()
+        self.wfile.write(corpo)
+
+    # --- GET -----------------------------------------------------------
+
+    def do_GET(self):
+        url = urlparse(self.path)
+        q = parse_qs(url.query)
+        primo = lambda nome: (q.get(nome) or [None])[0]
+
+        if url.path == "/api/health":
+            try:
+                db.conteggi()
+                return self._json(200, {"ok": True})
+            except Exception as e:
+                return self._json(500, {"ok": False, "errore": str(e)})
+
+        if url.path == "/api/categorie":
+            conti = db.conteggi((primo("cerca") or "").strip()[:200] or None)
+            return self._json(200, {
+                "categorie": [
+                    {"chiave": k, "nome": nome, "conteggio": conti[k]} for k, nome in db.CATEGORIE
+                ],
+                "testo_max": config.TESTO_MAX,
+            })
+
+        if url.path == "/api/pensieri":
+            categoria = primo("categoria") or None
+            if categoria and categoria not in db.CHIAVI_CATEGORIE:
+                return self._errore(400, "Categoria sconosciuta.")
+            cerca = (primo("cerca") or "").strip()[:200] or None
+            pagina = _int(primo("pagina"), 1, 1, 100000)
+            per_pagina = _int(primo("per_pagina"), 20, 1, 100)
+            return self._json(200, db.elenca(categoria, cerca, pagina, per_pagina))
+
+        if url.path == "/api/export":
+            chiave = self.headers.get("X-Api-Key", "")
+            if not config.EXPORT_API_KEY or not hmac.compare_digest(chiave, config.EXPORT_API_KEY):
+                return self._errore(401, "unauthorized")
+            return self._json(200, db.esporta(_int(primo("dal_id"), 0, 0, 2**62)))
+
+        if url.path.startswith("/api/"):
+            return self._errore(404, "Non trovato.")
+
+        nome = PAGINE.get(url.path.rstrip("/") or "/", url.path.lstrip("/"))
+        percorso = (config.PUBLIC_DIR / nome).resolve()
+        if config.PUBLIC_DIR.resolve() not in percorso.parents or not percorso.is_file():
+            return self._errore(404, "Pagina non trovata.")
+        return self._file(percorso)
+
+    # --- POST ----------------------------------------------------------
+
+    def do_POST(self):
+        if urlparse(self.path).path != "/api/pensieri":
+            return self._errore(404, "Non trovato.")
+        try:
+            lunghezza = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            lunghezza = 0
+        if lunghezza <= 0 or lunghezza > MAX_CORPO:
+            return self._errore(413, "Richiesta troppo grande.")
+        try:
+            dati = json.loads(self.rfile.read(lunghezza).decode("utf-8"))
+            if not isinstance(dati, dict):
+                raise ValueError
+        except (ValueError, UnicodeDecodeError):
+            return self._errore(400, "Richiesta non valida.")
+
+        # Campo esca: invisibile agli umani, i bot lo compilano.
+        if str(dati.get("sito") or "").strip():
+            return self._json(201, {"ok": True})
+
+        categoria = str(dati.get("categoria") or "")
+        if categoria not in db.CHIAVI_CATEGORIE:
+            return self._errore(400, "Scegli a quale gruppo appartieni.")
+
+        testo = db.normalizza_testo(str(dati.get("testo") or ""))
+        if len(testo) < config.TESTO_MIN:
+            return self._errore(400, "Il pensiero è troppo corto.")
+        if len(testo) > config.TESTO_MAX:
+            return self._errore(400, f"Il pensiero supera i {config.TESTO_MAX} caratteri.")
+        if db.e_duplicato(testo):
+            return self._errore(409, "Questo pensiero è già nel diario.")
+
+        blocco = limiti.controlla(self._gettone(), self._ip())
+        if blocco:
+            return self._errore(429, blocco)
+
+        pensiero = db.inserisci(testo, categoria)
+        return self._json(201, {"ok": True, "pensiero": pensiero})
+
+
+def avvia() -> None:
+    db.init_db()
+    server = ThreadingHTTPServer((config.HOST, config.PORT), Gestore)
+    server.daemon_threads = True
+    print(f"Diario di bordo su http://{config.HOST}:{config.PORT}/  (DB: {config.DB_PATH})")
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        server.server_close()

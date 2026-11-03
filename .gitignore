@@ -1,0 +1,8 @@
+.env
+data/
+__pycache__/
+*.pyc
+
+# Impeccable: schermate di revisione e stato delle domande (rigenerabili)
+.impeccable/review/
+.impeccable/questions/

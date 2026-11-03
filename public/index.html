@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Diario di bordo</title>
+  <meta name="description" content="Il diario anonimo di allievi e docenti: scrivi un pensiero, leggi quelli degli altri.">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#d6d8df" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#16161e" media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="/fonts/atkinson-next.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <a class="salta" href="#contenuto">Vai al contenuto</a>
+
+  <header class="barra">
+    <div class="barra-dentro">
+      <a class="marchio" href="/">
+        <span class="striscia" aria-hidden="true"><i data-gruppo="anno-1"></i><i data-gruppo="anno-2"></i><i data-gruppo="anno-3"></i><i data-gruppo="anno-4"></i><i data-gruppo="anno-5"></i><i data-gruppo="fuori-corso"></i><i data-gruppo="ex-allievi"></i><i data-gruppo="docenti"></i></span>
+        Diario di bordo
+      </a>
+      <nav aria-label="Sezioni">
+        <a href="/" aria-current="page">Scrivi</a>
+        <a href="/archivio">Archivio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenuto" class="pagina">
+    <div class="colonna">
+      <!-- ==========================================================
+           TITOLO E DESCRIZIONE: modificare qui il testo della home.
+           ========================================================== -->
+      <section class="intestazione">
+        <h1>Lascia un segno nel diario</h1>
+        <p>
+          Uno spazio comune dove allievi e docenti lasciano un pensiero, breve
+          o lungo, sul percorso che stanno facendo. Non serve il nome: basta
+          il tuo gruppo.
+        </p>
+      </section>
+      <!-- ========================================================== -->
+
+      <form id="form" class="form" novalidate>
+        <div class="area-testo">
+          <label class="etichetta" for="testo">Il tuo pensiero</label>
+          <textarea id="testo" name="testo" rows="7" placeholder="Scrivi qui, anche solo una frase…"
+                    aria-describedby="stato-bozza errore-testo" autocomplete="off"></textarea>
+          <div class="sotto-campo">
+            <span id="stato-bozza"></span>
+            <span id="contatore" class="contatore" hidden></span>
+          </div>
+          <p id="errore-testo" class="errore-campo" hidden></p>
+        </div>
+
+        <fieldset id="gruppo" aria-describedby="aiuto-gruppo">
+          <legend class="etichetta">Il tuo gruppo</legend>
+          <p id="aiuto-gruppo" class="aiuto">È l'unica cosa che il diario sa di te.</p>
+          <div class="campionario" id="categorie">
+            <!-- riempito da app.js con le categorie del server -->
+          </div>
+          <p id="errore-gruppo" class="errore-campo" hidden></p>
+        </fieldset>
+
+        <!-- Campo esca per i bot: le persone non lo vedono. -->
+        <div class="sr" aria-hidden="true">
+          <label for="sito">Lascia vuoto</label>
+          <input id="sito" name="sito" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <div class="azioni">
+          <button class="bottone" id="invia" type="submit">Invia nel diario</button>
+          <p class="promessa"><b>Anonimo</b> · pubblicato subito · non si può modificare</p>
+        </div>
+        <p class="messaggio" id="messaggio" role="alert"></p>
+
+        <details class="spiegazione">
+          <summary>Come funziona l'anonimato</summary>
+          <ul>
+            <li>Del tuo pensiero il diario conserva solo il testo, il gruppo, il giorno e l'ora dell'invio. Nell'archivio si vede solo il giorno, mai l'ora.</li>
+            <li>Non salva nomi, email né indirizzi IP. Un cookie tecnico serve solo a evitare invii a raffica.</li>
+            <li>Chiunque può scegliere qualunque gruppo: è sulla fiducia.</li>
+            <li>Una volta inviato, il pensiero non si può modificare. Per segnalarne uno inappropriato, rivolgiti a un docente.</li>
+          </ul>
+        </details>
+      </form>
+
+      <section id="esito" class="esito" hidden aria-labelledby="esito-titolo">
+        <h2 id="esito-titolo" tabindex="-1">Il tuo pensiero è nel diario</h2>
+        <article class="campione" id="esito-campione">
+          <div class="campione-testa">
+            <span class="campione-gruppo" id="esito-gruppo"></span>
+            <span class="numero" id="esito-numero"></span>
+          </div>
+          <div class="campione-corpo">
+            <p class="campione-testo" id="esito-testo"></p>
+            <span class="campione-giorno" id="esito-giorno"></span>
+          </div>
+          <span class="timbro" aria-hidden="true">Pubblicato</span>
+        </article>
+        <div class="esito-azioni">
+          <a class="bottone" id="esito-link" href="/archivio">Leggi il tuo gruppo</a>
+          <button class="bottone secondario" id="esito-altro" type="button">Scrivine un altro</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-spunta" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-avviso" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></symbol>
+  </svg>
+  <script src="/comune.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

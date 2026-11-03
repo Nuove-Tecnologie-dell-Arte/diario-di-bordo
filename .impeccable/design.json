@@ -1,0 +1,1025 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T10:39:38+00:00",
+  "title": "Design System: Diario di bordo",
+  "extensions": {
+    "colorMeta": {
+      "fondo": {
+        "role": "neutral",
+        "displayName": "Fondo Nebbia (chiaro)",
+        "theme": "light",
+        "cssVar": "--fondo",
+        "canonical": "#e6e7ed",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252527",
+          "#414245",
+          "#606165",
+          "#818287",
+          "#a4a5a9",
+          "#c8c9cc",
+          "#eeeef1"
+        ]
+      },
+      "barra": {
+        "role": "neutral",
+        "displayName": "Barra Ardesia (chiaro)",
+        "theme": "light",
+        "cssVar": "--barra",
+        "canonical": "#d6d8df",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242527",
+          "#414245",
+          "#606166",
+          "#808288",
+          "#a3a5aa",
+          "#c8c9cd",
+          "#edeef1"
+        ]
+      },
+      "scheda": {
+        "role": "neutral",
+        "displayName": "Carta Campione (chiaro)",
+        "theme": "light",
+        "cssVar": "--scheda",
+        "canonical": "#f4f5f8",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#414243",
+          "#606163",
+          "#818285",
+          "#a4a5a7",
+          "#c8c9cb",
+          "#eeeef0"
+        ]
+      },
+      "campo": {
+        "role": "neutral",
+        "displayName": "Pozzo del Campo (chiaro)",
+        "theme": "light",
+        "cssVar": "--campo",
+        "canonical": "#f4f5f8",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#414243",
+          "#606163",
+          "#818285",
+          "#a4a5a7",
+          "#c8c9cb",
+          "#eeeef0"
+        ]
+      },
+      "testo": {
+        "role": "neutral",
+        "displayName": "Inchiostro Indaco (chiaro)",
+        "theme": "light",
+        "cssVar": "--testo",
+        "canonical": "#343b58",
+        "tonalRamp": [
+          "#090b11",
+          "#212430",
+          "#3c4154",
+          "#59607a",
+          "#7881a1",
+          "#9ca4bf",
+          "#c2c8de",
+          "#e9eefd"
+        ]
+      },
+      "testo-2": {
+        "role": "neutral",
+        "displayName": "Inchiostro Tenue (chiaro)",
+        "theme": "light",
+        "cssVar": "--testo-2",
+        "canonical": "#51577a",
+        "tonalRamp": [
+          "#090b11",
+          "#222431",
+          "#3d4055",
+          "#5a5f7c",
+          "#7980a5",
+          "#9da3c2",
+          "#c3c8e0",
+          "#eaeeff"
+        ]
+      },
+      "segnaposto": {
+        "role": "neutral",
+        "displayName": "Segnaposto (chiaro)",
+        "theme": "light",
+        "cssVar": "--segnaposto",
+        "canonical": "#51577a",
+        "tonalRamp": [
+          "#090b11",
+          "#222431",
+          "#3d4055",
+          "#5a5f7c",
+          "#7980a5",
+          "#9da3c2",
+          "#c3c8e0",
+          "#eaeeff"
+        ]
+      },
+      "bordo-campo": {
+        "role": "neutral",
+        "displayName": "Bordo dei Campi (chiaro)",
+        "theme": "light",
+        "cssVar": "--bordo-campo",
+        "canonical": "#707280",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#24252a",
+          "#404149",
+          "#5f606c",
+          "#7f818f",
+          "#a2a4b0",
+          "#c7c8d2",
+          "#edeef5"
+        ]
+      },
+      "linea": {
+        "role": "neutral",
+        "displayName": "Linea (chiaro)",
+        "theme": "light",
+        "cssVar": "--linea",
+        "canonical": "#c1c2c7",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252527",
+          "#414244",
+          "#606165",
+          "#818287",
+          "#a4a5a9",
+          "#c8c9cc",
+          "#eeeef0"
+        ]
+      },
+      "accento": {
+        "role": "primary",
+        "displayName": "Blu Tokyo (chiaro)",
+        "theme": "light",
+        "cssVar": "--accento",
+        "canonical": "#2959aa",
+        "tonalRamp": [
+          "#040b1a",
+          "#122443",
+          "#254170",
+          "#3960a2",
+          "#4f81d4",
+          "#7ca6eb",
+          "#a9cbff",
+          "#d8f0ff"
+        ]
+      },
+      "su-accento": {
+        "role": "neutral",
+        "displayName": "Su Accento (chiaro)",
+        "theme": "light",
+        "cssVar": "--su-accento",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "errore": {
+        "role": "neutral",
+        "displayName": "Rosso Errore (chiaro)",
+        "theme": "light",
+        "cssVar": "--errore",
+        "canonical": "#8c4351",
+        "tonalRamp": [
+          "#140709",
+          "#371c20",
+          "#5e333b",
+          "#894d57",
+          "#b56875",
+          "#d1909a",
+          "#edb9c0",
+          "#ffe4e8"
+        ]
+      },
+      "su-tinta": {
+        "role": "secondary",
+        "displayName": "Su Tinta (chiaro)",
+        "theme": "light",
+        "cssVar": "--su-tinta",
+        "canonical": "#f4f5f8",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#414243",
+          "#606163",
+          "#818285",
+          "#a4a5a7",
+          "#c8c9cb",
+          "#eeeef0"
+        ]
+      },
+      "fascia": {
+        "role": "secondary",
+        "displayName": "Fascia del Campionario (chiaro)",
+        "theme": "light",
+        "cssVar": "--fascia",
+        "canonical": "rgb(244 245 248 / .22)"
+      },
+      "t-anno-1": {
+        "role": "secondary",
+        "displayName": "Verde 1° anno (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-anno-1",
+        "canonical": "#385f0d",
+        "tonalRamp": [
+          "#070e03",
+          "#1b2a0f",
+          "#334a1f",
+          "#4c6c31",
+          "#679145",
+          "#8fb275",
+          "#b8d3a5",
+          "#e2f6d5"
+        ]
+      },
+      "t-anno-2": {
+        "role": "secondary",
+        "displayName": "Teal 2° anno (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-anno-2",
+        "canonical": "#33635c",
+        "tonalRamp": [
+          "#050d0c",
+          "#182926",
+          "#2d4844",
+          "#446a64",
+          "#5d8d85",
+          "#88aea8",
+          "#b3d1cb",
+          "#dff4f0"
+        ]
+      },
+      "t-anno-3": {
+        "role": "secondary",
+        "displayName": "Ciano 3° anno (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-anno-3",
+        "canonical": "#006c86",
+        "tonalRamp": [
+          "#020d12",
+          "#0a2933",
+          "#184958",
+          "#266b80",
+          "#398ea9",
+          "#70b0c6",
+          "#a2d2e3",
+          "#d4f5ff"
+        ]
+      },
+      "t-anno-4": {
+        "role": "secondary",
+        "displayName": "Blu 4° anno (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-anno-4",
+        "canonical": "#2959aa",
+        "tonalRamp": [
+          "#040b1a",
+          "#122443",
+          "#254170",
+          "#3960a2",
+          "#4f81d4",
+          "#7ca6eb",
+          "#a9cbff",
+          "#d8f0ff"
+        ]
+      },
+      "t-anno-5": {
+        "role": "secondary",
+        "displayName": "Magenta 5° anno (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-anno-5",
+        "canonical": "#65359d",
+        "tonalRamp": [
+          "#0e0719",
+          "#2b1b42",
+          "#4c326f",
+          "#6f4ba0",
+          "#9467d1",
+          "#b391e9",
+          "#d4bbff",
+          "#f6e5ff"
+        ]
+      },
+      "t-fuori-corso": {
+        "role": "secondary",
+        "displayName": "Arancio Fuori corso (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-fuori-corso",
+        "canonical": "#965027",
+        "tonalRamp": [
+          "#140803",
+          "#381d0f",
+          "#5f361f",
+          "#8a5131",
+          "#b66d46",
+          "#d29575",
+          "#eebda4",
+          "#ffe6d5"
+        ]
+      },
+      "t-ex-allievi": {
+        "role": "secondary",
+        "displayName": "Giallo Ex allievi (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-ex-allievi",
+        "canonical": "#8f5e15",
+        "tonalRamp": [
+          "#120902",
+          "#332109",
+          "#583b16",
+          "#805823",
+          "#a97735",
+          "#c69c6a",
+          "#e4c39c",
+          "#ffead0"
+        ]
+      },
+      "t-docenti": {
+        "role": "secondary",
+        "displayName": "Inchiostro Docenti (chiaro)",
+        "theme": "light",
+        "cssVar": "--t-docenti",
+        "canonical": "#343b58",
+        "tonalRamp": [
+          "#090b11",
+          "#212430",
+          "#3c4154",
+          "#59607a",
+          "#7881a1",
+          "#9ca4bf",
+          "#c2c8de",
+          "#e9eefd"
+        ]
+      },
+      "fondo-scuro": {
+        "role": "neutral",
+        "displayName": "Fondo Nebbia (scuro)",
+        "theme": "dark",
+        "cssVar": "--fondo",
+        "canonical": "#1a1b26",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#24252a",
+          "#404149",
+          "#5f606b",
+          "#80818f",
+          "#a3a4b0",
+          "#c7c8d2",
+          "#edeef5"
+        ]
+      },
+      "barra-scuro": {
+        "role": "neutral",
+        "displayName": "Barra Ardesia (scuro)",
+        "theme": "dark",
+        "cssVar": "--barra",
+        "canonical": "#16161e",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252528",
+          "#414147",
+          "#606069",
+          "#81818c",
+          "#a4a4ad",
+          "#c8c8cf",
+          "#eeeef3"
+        ]
+      },
+      "scheda-scuro": {
+        "role": "neutral",
+        "displayName": "Carta Campione (scuro)",
+        "theme": "dark",
+        "cssVar": "--scheda",
+        "canonical": "#1f2335",
+        "tonalRamp": [
+          "#0a0b0f",
+          "#23252d",
+          "#3e414e",
+          "#5c6072",
+          "#7c8197",
+          "#9fa4b7",
+          "#c5c8d7",
+          "#ebeef8"
+        ]
+      },
+      "campo-scuro": {
+        "role": "neutral",
+        "displayName": "Pozzo del Campo (scuro)",
+        "theme": "dark",
+        "cssVar": "--campo",
+        "canonical": "#16161e",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252528",
+          "#414147",
+          "#606069",
+          "#81818c",
+          "#a4a4ad",
+          "#c8c8cf",
+          "#eeeef3"
+        ]
+      },
+      "testo-scuro": {
+        "role": "neutral",
+        "displayName": "Inchiostro Indaco (scuro)",
+        "theme": "dark",
+        "cssVar": "--testo",
+        "canonical": "#c0caf5",
+        "tonalRamp": [
+          "#090b12",
+          "#212432",
+          "#3c4157",
+          "#585f7e",
+          "#7780a7",
+          "#9ca3c4",
+          "#c2c8e2",
+          "#e9eeff"
+        ]
+      },
+      "testo-2-scuro": {
+        "role": "neutral",
+        "displayName": "Inchiostro Tenue (scuro)",
+        "theme": "dark",
+        "cssVar": "--testo-2",
+        "canonical": "#9aa5ce",
+        "tonalRamp": [
+          "#090b12",
+          "#212432",
+          "#3b4157",
+          "#58607e",
+          "#7680a7",
+          "#9ba4c4",
+          "#c1c8e2",
+          "#e9eeff"
+        ]
+      },
+      "segnaposto-scuro": {
+        "role": "neutral",
+        "displayName": "Segnaposto (scuro)",
+        "theme": "dark",
+        "cssVar": "--segnaposto",
+        "canonical": "#8f98c4",
+        "tonalRamp": [
+          "#090b12",
+          "#212433",
+          "#3c4058",
+          "#585f80",
+          "#777faa",
+          "#9ba3c6",
+          "#c1c8e4",
+          "#e9edff"
+        ]
+      },
+      "bordo-campo-scuro": {
+        "role": "neutral",
+        "displayName": "Bordo dei Campi (scuro)",
+        "theme": "dark",
+        "cssVar": "--bordo-campo",
+        "canonical": "#737aa2",
+        "tonalRamp": [
+          "#090b12",
+          "#212432",
+          "#3c4057",
+          "#595f7e",
+          "#787fa7",
+          "#9ca3c4",
+          "#c2c8e2",
+          "#eaedff"
+        ]
+      },
+      "linea-scuro": {
+        "role": "neutral",
+        "displayName": "Linea (scuro)",
+        "theme": "dark",
+        "cssVar": "--linea",
+        "canonical": "#292e42",
+        "tonalRamp": [
+          "#0a0b0f",
+          "#22252d",
+          "#3e414f",
+          "#5b6073",
+          "#7b8199",
+          "#9fa4b8",
+          "#c4c9d8",
+          "#ebeef9"
+        ]
+      },
+      "accento-scuro": {
+        "role": "primary",
+        "displayName": "Blu Tokyo (scuro)",
+        "theme": "dark",
+        "cssVar": "--accento",
+        "canonical": "#7aa2f7",
+        "tonalRamp": [
+          "#050b19",
+          "#162441",
+          "#2b406e",
+          "#415f9f",
+          "#5a7fd0",
+          "#84a4e8",
+          "#afc9fe",
+          "#dcefff"
+        ]
+      },
+      "su-accento-scuro": {
+        "role": "neutral",
+        "displayName": "Su Accento (scuro)",
+        "theme": "dark",
+        "cssVar": "--su-accento",
+        "canonical": "#16161e",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252528",
+          "#414147",
+          "#606069",
+          "#81818c",
+          "#a4a4ad",
+          "#c8c8cf",
+          "#eeeef3"
+        ]
+      },
+      "errore-scuro": {
+        "role": "neutral",
+        "displayName": "Rosso Errore (scuro)",
+        "theme": "dark",
+        "cssVar": "--errore",
+        "canonical": "#f7768e",
+        "tonalRamp": [
+          "#180407",
+          "#40131d",
+          "#6d2635",
+          "#9c3b50",
+          "#ce526c",
+          "#e88292",
+          "#ffafba",
+          "#ffdde4"
+        ]
+      },
+      "su-tinta-scuro": {
+        "role": "secondary",
+        "displayName": "Su Tinta (scuro)",
+        "theme": "dark",
+        "cssVar": "--su-tinta",
+        "canonical": "#16161e",
+        "tonalRamp": [
+          "#0b0b0d",
+          "#252528",
+          "#414147",
+          "#606069",
+          "#81818c",
+          "#a4a4ad",
+          "#c8c8cf",
+          "#eeeef3"
+        ]
+      },
+      "fascia-scuro": {
+        "role": "secondary",
+        "displayName": "Fascia del Campionario (scuro)",
+        "theme": "dark",
+        "cssVar": "--fascia",
+        "canonical": "rgb(22 22 30 / .3)"
+      },
+      "t-anno-1-scuro": {
+        "role": "secondary",
+        "displayName": "Verde 1° anno (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-anno-1",
+        "canonical": "#9ece6a",
+        "tonalRamp": [
+          "#060e01",
+          "#1b2b06",
+          "#324b11",
+          "#4b6e1e",
+          "#66922e",
+          "#8eb367",
+          "#b7d59a",
+          "#e2f7ce"
+        ]
+      },
+      "t-anno-2-scuro": {
+        "role": "secondary",
+        "displayName": "Teal 2° anno (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-anno-2",
+        "canonical": "#73daca",
+        "tonalRamp": [
+          "#010e0c",
+          "#042c27",
+          "#0c4d45",
+          "#167065",
+          "#269587",
+          "#68b6a9",
+          "#9dd7cc",
+          "#d1f8f1"
+        ]
+      },
+      "t-anno-3-scuro": {
+        "role": "secondary",
+        "displayName": "Ciano 3° anno (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-anno-3",
+        "canonical": "#7dcfff",
+        "tonalRamp": [
+          "#020d15",
+          "#0a2838",
+          "#184760",
+          "#26688b",
+          "#398bb8",
+          "#6faed3",
+          "#a2d0ed",
+          "#d3f4ff"
+        ]
+      },
+      "t-anno-4-scuro": {
+        "role": "secondary",
+        "displayName": "Blu 4° anno (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-anno-4",
+        "canonical": "#7aa2f7",
+        "tonalRamp": [
+          "#050b19",
+          "#162441",
+          "#2b406e",
+          "#415f9f",
+          "#5a7fd0",
+          "#84a4e8",
+          "#afc9fe",
+          "#dcefff"
+        ]
+      },
+      "t-anno-5-scuro": {
+        "role": "secondary",
+        "displayName": "Magenta 5° anno (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-anno-5",
+        "canonical": "#bb9af7",
+        "tonalRamp": [
+          "#0d0817",
+          "#291e3d",
+          "#493668",
+          "#6b5196",
+          "#8e6ec6",
+          "#af96df",
+          "#d0bef7",
+          "#f3e7ff"
+        ]
+      },
+      "t-fuori-corso-scuro": {
+        "role": "secondary",
+        "displayName": "Arancio Fuori corso (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-fuori-corso",
+        "canonical": "#ff9e64",
+        "tonalRamp": [
+          "#160701",
+          "#3c1b06",
+          "#65320f",
+          "#924b1b",
+          "#c1672b",
+          "#dc9064",
+          "#f6ba98",
+          "#ffe4cd"
+        ]
+      },
+      "t-ex-allievi-scuro": {
+        "role": "secondary",
+        "displayName": "Giallo Ex allievi (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-ex-allievi",
+        "canonical": "#e0af68",
+        "tonalRamp": [
+          "#120901",
+          "#322107",
+          "#563c13",
+          "#7e5920",
+          "#a67931",
+          "#c49e68",
+          "#e2c49b",
+          "#ffebce"
+        ]
+      },
+      "t-docenti-scuro": {
+        "role": "secondary",
+        "displayName": "Inchiostro Docenti (scuro)",
+        "theme": "dark",
+        "cssVar": "--t-docenti",
+        "canonical": "#c0caf5",
+        "tonalRamp": [
+          "#090b12",
+          "#212432",
+          "#3c4157",
+          "#585f7e",
+          "#7780a7",
+          "#9ca3c4",
+          "#c2c8e2",
+          "#e9eeff"
+        ]
+      }
+    },
+    "themes": {
+      "light": {
+        "name": "Tokyo Night Light",
+        "selector": ":root"
+      },
+      "dark": {
+        "name": "Tokyo Night",
+        "selector": "@media (prefers-color-scheme: dark) :root",
+        "note": "Le chiavi '-scuro' del frontmatter valgono qui con lo stesso nome di variabile CSS."
+      },
+      "binding": true,
+      "source": "https://github.com/tokyo-night/tokyo-night-vscode-theme",
+      "decision": "Palette pinnata dall'utente: impegno di marca vincolante."
+    },
+    "groupTint": {
+      "mechanism": "[data-gruppo=\"<chiave>\"] imposta --tinta = var(--t-<chiave>)",
+      "order": [
+        "anno-1",
+        "anno-2",
+        "anno-3",
+        "anno-4",
+        "anno-5",
+        "fuori-corso",
+        "ex-allievi",
+        "docenti"
+      ]
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titolo di pagina, uno per pagina."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titolo dello stato di esito dopo l'invio."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Etichette dei campi e legende."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Testo corrente, descrizioni, spiegazioni."
+      },
+      "body-pensiero": {
+        "displayName": "Body pensiero",
+        "purpose": "Il testo dei pensieri, in scrittura e nei campioni; max 65ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Nomi dei gruppi, filtri, navigazione, aiuti."
+      },
+      "catalogo": {
+        "displayName": "Catalogo",
+        "purpose": "Numero 'N. 0000' in mono tabellare su ogni campione."
+      },
+      "timbro": {
+        "displayName": "Timbro",
+        "purpose": "Solo il timbro 'Pubblicato', maiuscolo."
+      }
+    },
+    "fonts": [
+      {
+        "family": "Atkinson Next",
+        "src": "/fonts/atkinson-next.woff2",
+        "weight": "400 700"
+      },
+      {
+        "family": "Atkinson Mono",
+        "src": "/fonts/atkinson-mono.woff2",
+        "weight": "500"
+      }
+    ],
+    "shadows": [
+      {
+        "name": "ombra",
+        "value": "0 1px 2px rgb(52 59 88 / .08), 0 8px 24px -12px rgb(52 59 88 / .18)",
+        "theme": "light",
+        "purpose": "Campioni e tessera selezionata."
+      },
+      {
+        "name": "ombra-scuro",
+        "value": "0 1px 2px rgb(0 0 0 / .3), 0 10px 28px -14px rgb(0 0 0 / .6)",
+        "theme": "dark",
+        "purpose": "Campioni e tessera selezionata."
+      },
+      {
+        "name": "anello-selezione",
+        "value": "0 0 0 2px var(--fondo), 0 0 0 4px var(--testo), var(--ombra)",
+        "purpose": "Tessera del gruppo scelto."
+      },
+      {
+        "name": "focus",
+        "value": "outline: 2px solid var(--accento); outline-offset: 3px",
+        "purpose": "Anello di focus globale (6px sulle tessere)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "uscita",
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Easing di uscita per tessere, timbro, barra del campionario."
+      },
+      {
+        "name": "stato",
+        "value": "150ms",
+        "purpose": "Bordi, fondi e filtri al passaggio."
+      },
+      {
+        "name": "tessera",
+        "value": "250ms var(--uscita)",
+        "purpose": "Sollevamento delle tessere (-2px hover, -3px scelta)."
+      },
+      {
+        "name": "timbra",
+        "value": "550ms var(--uscita) 150ms",
+        "purpose": "Entrata del timbro 'Pubblicato' da scala 1.6 e -12° a -4°."
+      },
+      {
+        "name": "spettro",
+        "value": "600ms var(--uscita)",
+        "purpose": "Crescita dei segmenti della barra del campionario."
+      },
+      {
+        "name": "ridotto",
+        "value": "prefers-reduced-motion: durate a .01ms",
+        "purpose": "Tutte le animazioni si azzerano."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "stretto-xs",
+        "value": "max-width: 380px"
+      },
+      {
+        "name": "stretto",
+        "value": "max-width: 420px"
+      },
+      {
+        "name": "esito-azioni",
+        "value": "min-width: 560px"
+      },
+      {
+        "name": "medio",
+        "value": "min-width: 760px"
+      },
+      {
+        "name": "largo",
+        "value": "min-width: 1000px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bottone Invia",
+      "kind": "button",
+      "refersTo": "bottone",
+      "description": "L'azione principale: invia il pensiero. A tutta larghezza su mobile.",
+      "html": "<button class=\"ds-bottone\">Invia nel diario</button>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-bottone{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;font:700 1.0625rem/1.2 var(--font);color:var(--su-accento);background:var(--accento);border:1px solid var(--accento);border-radius:var(--raggio-campo);cursor:pointer;transition:filter .15s,transform .15s}.ds-bottone:hover{filter:brightness(1.08)}.ds-bottone:active{transform:translateY(1px)}.ds-bottone:focus-visible{outline:2px solid var(--accento);outline-offset:3px}"
+    },
+    {
+      "name": "Bottone secondario",
+      "kind": "button",
+      "refersTo": "bottone-secondario",
+      "description": "Azioni di contorno: Scrivine un altro, paginazione.",
+      "html": "<button class=\"ds-bottone-sec\">Scrivine un altro</button>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-bottone-sec{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;font:700 1.0625rem/1.2 var(--font);color:var(--testo);background:transparent;border:1px solid var(--bordo-campo);border-radius:var(--raggio-campo);cursor:pointer;transition:background .15s}.ds-bottone-sec:hover{background:var(--scheda)}.ds-bottone-sec:focus-visible{outline:2px solid var(--accento);outline-offset:3px}"
+    },
+    {
+      "name": "Area del pensiero",
+      "kind": "input",
+      "refersTo": "campo",
+      "description": "L'area di testo grande della home; cresce con il contenuto.",
+      "html": "<label class=\"ds-etichetta\" for=\"ds-t\">Il tuo pensiero</label><textarea id=\"ds-t\" class=\"ds-campo\" rows=\"4\" placeholder=\"Scrivi qui, anche solo una frase…\"></textarea>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-etichetta{display:block;font:700 1rem/1.55 var(--font);color:var(--testo);margin-bottom:8px}.ds-campo{width:100%;box-sizing:border-box;font:400 1.125rem/1.6 var(--font);color:var(--testo);background:var(--campo);border:1px solid var(--bordo-campo);border-radius:var(--raggio-campo);padding:14px 16px;resize:none;transition:border-color .15s,box-shadow .15s}.ds-campo::placeholder{color:var(--testo-2);opacity:1}.ds-campo:hover{border-color:var(--testo-2)}.ds-campo:focus-visible{outline:none;border-color:var(--accento);box-shadow:0 0 0 1px var(--accento)}"
+    },
+    {
+      "name": "Ricerca",
+      "kind": "input",
+      "refersTo": "campo",
+      "description": "Campo di ricerca dell'archivio, con lente SVG ed etichetta nascosta.",
+      "html": "<div class=\"ds-ricerca\"><label class=\"ds-sr\" for=\"ds-c\">Cerca nei pensieri</label><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" class=\"ds-lente\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"6.5\"/><path d=\"M20 20l-4.2-4.2\"/></svg><input id=\"ds-c\" type=\"search\" placeholder=\"Cerca una parola…\"></div>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-ricerca{position:relative}.ds-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.ds-lente{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--testo-2)}.ds-ricerca input{width:100%;box-sizing:border-box;min-height:50px;padding:14px 16px 14px 44px;font:400 1.0625rem var(--font);color:var(--testo);background:var(--campo);border:1px solid var(--bordo-campo);border-radius:var(--raggio-campo)}.ds-ricerca input::placeholder{color:var(--testo-2);opacity:1}.ds-ricerca input:hover{border-color:var(--testo-2)}.ds-ricerca input:focus-visible{outline:none;border-color:var(--accento);box-shadow:0 0 0 1px var(--accento)}"
+    },
+    {
+      "name": "Barra di navigazione",
+      "kind": "nav",
+      "refersTo": "nav-voce",
+      "description": "Marchio con la striscia delle otto tinte e le voci Scrivi / Archivio.",
+      "html": "<header class=\"ds-barra\"><a class=\"ds-marchio\" href=\"#\"><span class=\"ds-striscia\"><i style=\"background:#385f0d\"></i><i style=\"background:#33635c\"></i><i style=\"background:#006c86\"></i><i style=\"background:#2959aa\"></i><i style=\"background:#65359d\"></i><i style=\"background:#965027\"></i><i style=\"background:#8f5e15\"></i><i style=\"background:#343b58\"></i></span>Diario di bordo</a><nav><a href=\"#\" aria-current=\"page\">Scrivi</a><a href=\"#\">Archivio</a></nav></header>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-barra{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;padding:0 16px;background:var(--barra);border-bottom:1px solid var(--linea);font-family:var(--font)}.ds-marchio{display:inline-flex;align-items:center;gap:12px;min-height:44px;color:var(--testo);text-decoration:none;font-weight:700;letter-spacing:-.01em}.ds-striscia{display:inline-flex;gap:2px}.ds-striscia i{display:block;width:7px;height:20px;border-radius:1px}.ds-barra nav{display:flex;gap:4px}.ds-barra nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;color:var(--testo-2);text-decoration:none;font-weight:600;border-radius:var(--raggio-campo)}.ds-barra nav a:hover{color:var(--testo);background:var(--fondo)}.ds-barra nav a[aria-current=page]{color:var(--testo);box-shadow:inset 0 -2px 0 var(--accento);border-radius:0}.ds-barra a:focus-visible{outline:2px solid var(--accento);outline-offset:3px}"
+    },
+    {
+      "name": "Filtro a tessera",
+      "kind": "chip",
+      "refersTo": "filtro",
+      "description": "Filtri per gruppo dell'archivio: tessera, nome, conteggio; l'attivo si inverte.",
+      "html": "<div class=\"ds-filtri\"><button class=\"ds-filtro\" aria-pressed=\"false\"><span class=\"ds-tp\" style=\"background:#385f0d\"></span>1° anno <span class=\"ds-n\">6</span></button><button class=\"ds-filtro\" aria-pressed=\"true\"><span class=\"ds-tp\" style=\"background:#006c86\"></span>3° anno <span class=\"ds-n\">8</span></button></div>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-filtri{display:flex;gap:8px;flex-wrap:wrap}.ds-filtro{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 10px;font:600 .9375rem var(--font);color:var(--testo);background:var(--scheda);border:1px solid var(--bordo-campo);border-radius:var(--raggio-campo);cursor:pointer;transition:background .15s,border-color .15s}.ds-tp{width:14px;height:14px;border-radius:var(--raggio)}.ds-n{font-weight:500;color:var(--testo-2);font-variant-numeric:tabular-nums}.ds-filtro:hover{border-color:var(--testo)}.ds-filtro[aria-pressed=true]{background:var(--testo);border-color:var(--testo);color:var(--fondo)}.ds-filtro[aria-pressed=true] .ds-n{color:var(--fondo)}.ds-filtro[aria-pressed=true] .ds-tp{box-shadow:0 0 0 2px var(--testo),0 0 0 3px var(--fondo)}.ds-filtro:focus-visible{outline:2px solid var(--accento);outline-offset:3px}"
+    },
+    {
+      "name": "Campionario dei gruppi",
+      "kind": "custom",
+      "refersTo": "tessera",
+      "description": "Griglia 4x2 di tessere-campione con fascia: la scelta del gruppo.",
+      "html": "<div class=\"ds-campionario\"><input type=\"radio\" name=\"ds-g\" id=\"ds-g0\"><label for=\"ds-g0\"><span class=\"ds-tessera\" style=\"--tinta:#385f0d\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">1° anno</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g1\"><label for=\"ds-g1\"><span class=\"ds-tessera\" style=\"--tinta:#33635c\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">2° anno</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g2\" checked><label for=\"ds-g2\"><span class=\"ds-tessera\" style=\"--tinta:#006c86\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">3° anno</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g3\"><label for=\"ds-g3\"><span class=\"ds-tessera\" style=\"--tinta:#2959aa\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">4° anno</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g4\"><label for=\"ds-g4\"><span class=\"ds-tessera\" style=\"--tinta:#65359d\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">5° anno</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g5\"><label for=\"ds-g5\"><span class=\"ds-tessera\" style=\"--tinta:#965027\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">Fuori corso</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g6\"><label for=\"ds-g6\"><span class=\"ds-tessera\" style=\"--tinta:#8f5e15\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">Ex allievi</span></label><input type=\"radio\" name=\"ds-g\" id=\"ds-g7\"><label for=\"ds-g7\"><span class=\"ds-tessera\" style=\"--tinta:#343b58\"><svg viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg></span><span class=\"ds-nome\">Docenti</span></label></div>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-campionario{display:grid;grid-template-columns:repeat(4,1fr);gap:10px 8px;font-family:var(--font)}.ds-campionario input{position:absolute;opacity:0;width:1px;height:1px}.ds-campionario label{display:grid;gap:6px;cursor:pointer}.ds-tessera{display:grid;place-items:center;height:48px;border-radius:var(--raggio);background:linear-gradient(to bottom,transparent 62%,var(--fascia) 62%,var(--fascia) 80%,transparent 80%),var(--tinta);color:var(--su-tinta);transition:transform .25s var(--uscita),box-shadow .25s var(--uscita)}.ds-tessera svg{opacity:0;transform:scale(.6);transition:opacity .2s,transform .3s var(--uscita)}.ds-nome{font-size:.9375rem;font-weight:600;line-height:1.2;color:var(--testo-2)}.ds-campionario label:hover .ds-tessera{transform:translateY(-2px)}.ds-campionario input:checked+label .ds-tessera{transform:translateY(-3px);box-shadow:0 0 0 2px var(--fondo),0 0 0 4px var(--testo),var(--ombra)}.ds-campionario input:checked+label .ds-tessera svg{opacity:1;transform:none}.ds-campionario input:checked+label .ds-nome{color:var(--testo);font-weight:700}.ds-campionario input:focus-visible+label .ds-tessera{outline:2px solid var(--accento);outline-offset:6px}"
+    },
+    {
+      "name": "Campione",
+      "kind": "card",
+      "refersTo": "campione",
+      "description": "Un pensiero come scheda del campionario: testata tinta con fascia e numero di catalogo, testo, giorno; con il timbro nello stato di esito.",
+      "html": "<article class=\"ds-campione\" style=\"--tinta:#006c86\"><div class=\"ds-testa\"><span class=\"ds-gruppo\">3° anno</span><span class=\"ds-numero\">N. 0042</span></div><div class=\"ds-corpo\"><p class=\"ds-testo\">Testo di esempio del pensiero, che va a capo come scritto.</p><span class=\"ds-giorno\">3 novembre 2026</span></div><span class=\"ds-timbro\">Pubblicato</span></article>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-campione{position:relative;background:var(--scheda);border:1px solid var(--linea);border-radius:var(--raggio-campo);overflow:clip;box-shadow:var(--ombra);font-family:var(--font);color:var(--testo)}.ds-testa{display:flex;align-items:center;gap:10px;min-height:46px;padding:8px 20px 14px;box-sizing:border-box;background:linear-gradient(to bottom,transparent calc(100% - 8px),var(--fascia) calc(100% - 8px)),var(--tinta);color:var(--su-tinta);font-size:.9375rem}.ds-gruppo{font-weight:700}.ds-numero{margin-left:auto;font:500 .875rem var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.02em}.ds-corpo{padding:16px 20px 56px}.ds-testo{margin:0 0 12px;font-size:1.125rem;line-height:1.6;white-space:pre-wrap;max-width:65ch}.ds-giorno{font-size:.875rem;color:var(--testo-2)}.ds-timbro{position:absolute;right:16px;bottom:14px;font:500 .8125rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--tinta);border:2px solid var(--tinta);border-radius:var(--raggio);padding:4px 10px;transform:rotate(-4deg);animation:ds-timbra .55s var(--uscita) both .15s}@keyframes ds-timbra{from{opacity:0;transform:rotate(-12deg) scale(1.6);filter:blur(2px)}to{opacity:1;transform:rotate(-4deg) scale(1);filter:none}}@media (prefers-reduced-motion:reduce){.ds-timbro{animation:none}}"
+    },
+    {
+      "name": "Barra del campionario",
+      "kind": "custom",
+      "description": "Archivio: segmenti tinti larghi in proporzione ai pensieri per gruppo.",
+      "html": "<div class=\"ds-spettro-box\"><div class=\"ds-didascalia\"><span>Chi scrive nel diario</span><span><b>38</b> pensieri</span></div><div class=\"ds-spettro\"><i style=\"background:#385f0d;flex-grow:6\"></i><i style=\"background:#33635c;flex-grow:3\"></i><i style=\"background:#006c86;flex-grow:8\"></i><i style=\"background:#2959aa;flex-grow:4\"></i><i style=\"background:#65359d;flex-grow:3\"></i><i style=\"background:#965027;flex-grow:3\"></i><i style=\"background:#8f5e15;flex-grow:7\"></i><i style=\"background:#343b58;flex-grow:4\"></i></div></div>",
+      "css": ":host{--fondo:#e6e7ed;--barra:#d6d8df;--scheda:#f4f5f8;--campo:#f4f5f8;--testo:#343b58;--testo-2:#51577a;--bordo-campo:#707280;--linea:#c1c2c7;--accento:#2959aa;--su-accento:#fff;--su-tinta:#f4f5f8;--fascia:rgb(244 245 248/.22);--raggio:3px;--raggio-campo:6px;--font:'Atkinson Next',system-ui,sans-serif;--mono:'Atkinson Mono',ui-monospace,monospace;--ombra:0 1px 2px rgb(52 59 88/.08),0 8px 24px -12px rgb(52 59 88/.18);--uscita:cubic-bezier(.16,1,.3,1)}.ds-spettro-box{font-family:var(--font)}.ds-didascalia{display:flex;justify-content:space-between;font-size:.875rem;color:var(--testo-2);margin-bottom:8px}.ds-didascalia b{color:var(--testo);font-variant-numeric:tabular-nums}.ds-spettro{display:flex;gap:2px;height:14px;border-radius:var(--raggio);overflow:hidden;background:var(--linea)}.ds-spettro i{display:block;transition:flex-grow .6s var(--uscita)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Il campionario del colorificio",
+    "overview": "Il diario è un campionario colori: ogni gruppo dell'Accademia è una tinta, ogni pensiero è un campione numerato a catalogo. Chi arriva sceglie la propria tinta da una griglia di tessere-campione, scrive, e vede il proprio campione entrare nel diario con il suo numero e un timbro \"Pubblicato\". In archivio si legge per tinte: la barra del campionario dice chi sta scrivendo e quanto.\n\nLa palette è **Tokyo Night** (https://github.com/tokyo-night/tokyo-night-vscode-theme), scelta e fissata dall'utente: in chiaro Tokyo Night Light, in scuro Tokyo Night, commutati da `prefers-color-scheme`. È un impegno di marca vincolante, non una proposta: nuove superfici non introducono tinte fuori da questa palette. La densità è quella di uno strumento da pollice: un'unica colonna a 390px, target da 44px in su, testo grande e leggibile (Atkinson Hyperlegible) per lettori con DSA. Il mondo rifiuta il diario-quaderno crema con serif e il feed di card generiche.",
+    "keyCharacteristics": [
+      "Otto tinte = otto gruppi, sempre nello stesso ordine (1°–5° anno, Fuori corso, Ex allievi, Docenti).",
+      "La tessera-campione rettangolare con fascia orizzontale è il segno ricorrente: marchio, scelta del gruppo, testata del campione, filtri, barra proporzionale.",
+      "Numero di catalogo \"N. 0042\" in mono tabellare su ogni pensiero.",
+      "Superfici piatte su fondo tonale, una sola ombra morbida per i campioni.",
+      "Due temi a pari dignità; nessuno dei due è derivato dall'altro."
+    ],
+    "rules": [
+      {
+        "name": "La Regola del Pin",
+        "body": "La palette è Tokyo Night e basta. Nuovi colori si prendono dal tema ufficiale (chiaro o scuro), mai inventati; ogni token esiste in entrambi i temi.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regola Una Tinta, Un Gruppo",
+        "body": "Una tinta del campionario indica solo il suo gruppo. Non la si usa come decorazione, come colore di stato o come secondo accento.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regola della Fascia",
+        "body": "La fascia va verso il contrasto con la tinta: chiara in chiaro, scura in scuro. Una fascia nera sulle tinte già scure di Tokyo Night Light sparirebbe.",
+        "section": "colors"
+      },
+      {
+        "name": "La Regola del Numero",
+        "body": "Ogni pensiero mostrato porta il suo numero di catalogo in mono tabellare; nessun altro testo usa il mono, tranne il timbro.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regola DSA",
+        "body": "Niente testo giustificato, niente corpo sotto 0.875rem, righe dei pensieri entro 65ch. Tutte le cifre che cambiano (contatori, totali, posizioni) sono tabellari.",
+        "section": "typography"
+      },
+      {
+        "name": "La Regola del Pollice",
+        "body": "Ogni bersaglio interattivo è alto almeno 44px; il bottone principale 52px.",
+        "section": "layout"
+      },
+      {
+        "name": "La Regola Piatto a Riposo",
+        "body": "Le tessere stanno piatte; si alzano di 2px al passaggio e di 3px quando sono scelte. Nient'altro si muove in profondità.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do prendere ogni colore da Tokyo Night (scuro) o Tokyo Night Light (chiaro) e definirlo in entrambi i temi.",
+      "Do dare a ogni elemento legato a un gruppo il suo `data-gruppo`, così eredita `--tinta`, e mostrare le otto tinte sempre nello stesso ordine.",
+      "Do usare la tessera rettangolare con fascia (3px di angolo) come unico segno identitario dei gruppi.",
+      "Do mostrare ogni pensiero come campione: testata tinta, numero \"N. 0000\" in mono tabellare, testo su `scheda`, giorno senza ora.",
+      "Do tenere bersagli da 44px, corpo ≥0.875rem, righe dei pensieri ≤65ch, testo allineato a sinistra.",
+      "Do rispettare `prefers-reduced-motion`: le animazioni (timbro, sollevamento delle tessere, barra) si azzerano."
+    ],
+    "donts": [
+      "Don't introdurre tinte fuori dalla palette Tokyo Night pinnata, né un secondo accento accanto a `accento`.",
+      "Don't usare una tinta di gruppo per decorare o per segnalare uno stato (successo, errore, avviso).",
+      "Don't tornare al diario-quaderno: fondo crema, serif, card generiche tutte uguali.",
+      "Don't usare il mono per testo corrente o titoli: è riservato a numero di catalogo e timbro.",
+      "Don't mostrare l'ora di un pensiero o qualunque segno che suggerisca un'identità oltre al gruppo.",
+      "Don't rendere quadrate le tessere del campionario o togliere loro la fascia."
+    ]
+  }
+}
