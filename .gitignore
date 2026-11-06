@@ -1,4 +1,5 @@
 .env
+testi.json
 data/
 __pycache__/
 *.pyc

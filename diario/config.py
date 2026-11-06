@@ -53,6 +53,9 @@ DB_PATH = _percorso("DIARIO_DB_PATH", "data/diario.db")
 # progetti. Vuota = export disattivato.
 EXPORT_API_KEY = os.environ.get("DIARIO_EXPORT_API_KEY", "")
 
+# Testi dell'interfaccia: override locale dei predefiniti (vedi diario/testi.py).
+TESTI_PATH = _percorso("DIARIO_TESTI", "testi.json")
+
 # --- Testi ---
 TESTO_MIN = _int("DIARIO_TESTO_MIN", 3)
 TESTO_MAX = _int("DIARIO_TESTO_MAX", 5000)

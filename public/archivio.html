@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Archivio · Diario di bordo</title>
-  <meta name="description" content="Tutti i pensieri del diario, da leggere per gruppo.">
+  <title data-testo="archivio.titolo_pagina">Archivio · Diario di bordo</title>
+  <meta name="description" data-testo-content="archivio.descrizione_pagina" content="Tutti i pensieri del diario, da leggere per gruppo.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#d6d8df" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#16161e" media="(prefers-color-scheme: dark)">
@@ -12,55 +12,55 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <a class="salta" href="#contenuto">Vai al contenuto</a>
+  <a class="salta" href="#contenuto" data-testo="comune.salta_contenuto">Vai al contenuto</a>
 
   <header class="barra">
     <div class="barra-dentro">
       <a class="marchio" href="/">
         <span class="striscia" aria-hidden="true"><i data-gruppo="anno-1"></i><i data-gruppo="anno-2"></i><i data-gruppo="anno-3"></i><i data-gruppo="anno-4"></i><i data-gruppo="anno-5"></i><i data-gruppo="fuori-corso"></i><i data-gruppo="ex-allievi"></i><i data-gruppo="docenti"></i></span>
-        Diario di bordo
+        <span data-testo="comune.nome_sito">Diario di bordo</span>
       </a>
-      <nav aria-label="Sezioni">
-        <a href="/">Scrivi</a>
-        <a href="/archivio" aria-current="page">Archivio</a>
+      <nav aria-label="Sezioni" data-testo-aria-label="comune.nav_etichetta">
+        <a href="/" data-testo="comune.nav_scrivi">Scrivi</a>
+        <a href="/archivio" aria-current="page" data-testo="comune.nav_archivio">Archivio</a>
       </nav>
     </div>
   </header>
 
   <main id="contenuto" class="pagina">
     <section class="intestazione">
-      <h1>Archivio</h1>
-      <p>Tutti i pensieri del diario, dal più recente. Scegli un gruppo o cerca una parola.</p>
+      <h1 data-testo="archivio.titolo">Archivio</h1>
+      <p data-testo="archivio.descrizione">Tutti i pensieri del diario, dal più recente. Scegli un gruppo o cerca una parola.</p>
     </section>
 
     <div class="archivio-colonna">
     <div class="spettro-box" id="spettro-box" hidden>
       <div class="spettro-didascalia" aria-hidden="true">
-        <span>Chi scrive nel diario</span>
-        <span><b id="spettro-totale"></b> pensieri</span>
+        <span data-testo="archivio.spettro_chi">Chi scrive nel diario</span>
+        <span><b id="spettro-totale"></b> <span data-testo="archivio.spettro_pensieri">pensieri</span></span>
       </div>
       <div class="spettro" id="spettro" aria-hidden="true"></div>
     </div>
 
-    <div class="filtri" id="filtri" role="group" aria-label="Filtra per gruppo"></div>
+    <div class="filtri" id="filtri" role="group" aria-label="Filtra per gruppo" data-testo-aria-label="archivio.filtri_etichetta"></div>
 
     <div class="ricerca">
-      <label class="sr" for="cerca">Cerca nei pensieri</label>
+      <label class="sr" for="cerca" data-testo="archivio.cerca_etichetta">Cerca nei pensieri</label>
       <svg class="icona" aria-hidden="true"><use href="#i-cerca"/></svg>
-      <input type="search" id="cerca" placeholder="Cerca una parola…" autocomplete="off" enterkeyhint="search">
+      <input type="search" id="cerca" placeholder="Cerca una parola…" data-testo-placeholder="archivio.cerca_segnaposto" autocomplete="off" enterkeyhint="search">
     </div>
 
     <p class="riepilogo" id="riepilogo" tabindex="-1" aria-live="polite"></p>
 
     <ol class="elenco" id="elenco"></ol>
 
-    <nav class="paginazione" id="paginazione" aria-label="Pagine" hidden>
+    <nav class="paginazione" id="paginazione" aria-label="Pagine" data-testo-aria-label="archivio.pagine_etichetta" hidden>
       <button class="bottone secondario" id="prec" type="button">
-        <svg class="icona" aria-hidden="true"><use href="#i-sinistra"/></svg>Più recenti
+        <svg class="icona" aria-hidden="true"><use href="#i-sinistra"/></svg><span data-testo="archivio.piu_recenti">Più recenti</span>
       </button>
       <span class="pos" id="pos"></span>
       <button class="bottone secondario" id="succ" type="button">
-        Più vecchi<svg class="icona" aria-hidden="true"><use href="#i-destra"/></svg>
+        <span data-testo="archivio.piu_vecchi">Più vecchi</span><svg class="icona" aria-hidden="true"><use href="#i-destra"/></svg>
       </button>
     </nav>
     </div>
@@ -71,6 +71,7 @@
     <symbol id="i-sinistra" viewBox="0 0 24 24"><path d="M14.5 6l-6 6 6 6"/></symbol>
     <symbol id="i-destra" viewBox="0 0 24 24"><path d="M9.5 6l6 6-6 6"/></symbol>
   </svg>
+  <script src="/testi.js"></script>
   <script src="/comune.js"></script>
   <script src="/archivio.js"></script>
 </body>

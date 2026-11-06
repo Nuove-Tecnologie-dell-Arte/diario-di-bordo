@@ -42,7 +42,7 @@ function salvaBozza() {
   timerBozza = setTimeout(() => {
     const v = testo.value;
     scriviMemoria(CHIAVE_BOZZA, v.trim() ? v : null);
-    statoBozza.textContent = v.trim() ? "Bozza salvata su questo dispositivo" : "";
+    statoBozza.textContent = v.trim() ? T("home.bozza_salvata", "Bozza salvata su questo dispositivo") : "";
   }, 500);
 }
 
@@ -50,7 +50,7 @@ function ripristinaBozza() {
   const bozza = leggiMemoria(CHIAVE_BOZZA);
   if (bozza) {
     testo.value = bozza;
-    statoBozza.textContent = "Bozza ripresa da dove l'avevi lasciata";
+    statoBozza.textContent = T("home.bozza_ripresa", "Bozza ripresa da dove l'avevi lasciata");
   }
 }
 
@@ -123,7 +123,7 @@ async function caricaCategorie() {
       campionario.append(input, label);
     }
   } catch {
-    messaggio.textContent = "Non riesco a caricare i gruppi: ricarica la pagina.";
+    messaggio.textContent = T("home.errore_categorie", "Non riesco a caricare i gruppi: ricarica la pagina.");
   }
   aggiornaContatore();
 }
@@ -140,14 +140,14 @@ form.addEventListener("submit", async (e) => {
   let primoErrore = null;
 
   if (valore.length < TESTO_MIN) {
-    mostraErrore(testo, erroreTesto, "Scrivi almeno qualche parola.");
+    mostraErrore(testo, erroreTesto, T("home.errore_corto", "Scrivi almeno qualche parola."));
     primoErrore = testo;
   } else if (valore.length > testoMax) {
-    mostraErrore(testo, erroreTesto, `Il pensiero supera i ${testoMax} caratteri: accorcialo un po'.`);
+    mostraErrore(testo, erroreTesto, T("home.errore_lungo", "Il pensiero supera i {max} caratteri: accorcialo un po'.", { max: testoMax }));
     primoErrore = testo;
   }
   if (!scelta) {
-    erroreGruppo.replaceChildren(icona("avviso"), document.createTextNode("Scegli il tuo gruppo dal campionario."));
+    erroreGruppo.replaceChildren(icona("avviso"), document.createTextNode(T("home.errore_gruppo", "Scegli il tuo gruppo dal campionario.")));
     erroreGruppo.hidden = false;
     for (const r of campionario.querySelectorAll("input")) {
       r.setAttribute("aria-invalid", "true");
@@ -162,7 +162,7 @@ form.addEventListener("submit", async (e) => {
 
   inviando = true;
   invia.setAttribute("aria-disabled", "true");
-  invia.textContent = "Invio in corso…";
+  invia.textContent = T("home.invio_in_corso", "Invio in corso…");
   try {
     const r = await fetch("/api/pensieri", {
       method: "POST",
@@ -179,17 +179,17 @@ form.addEventListener("submit", async (e) => {
       scriviMemoria(CHIAVE_BOZZA, null);
       mostraEsito(dati.pensiero, valore, scelta.value);
     } else if (r.status === 409 || r.status === 400) {
-      mostraErrore(testo, erroreTesto, dati.errore || "Controlla il testo e riprova.");
+      mostraErrore(testo, erroreTesto, dati.errore || T("home.errore_controlla", "Controlla il testo e riprova."));
       testo.focus();
     } else {
-      messaggio.textContent = dati.errore || "Qualcosa è andato storto: riprova tra poco. Il testo resta qui.";
+      messaggio.textContent = dati.errore || T("home.errore_generico", "Qualcosa è andato storto: riprova tra poco. Il testo resta qui.");
     }
   } catch {
-    messaggio.textContent = "Connessione assente: il testo resta qui, riprova appena torna la rete.";
+    messaggio.textContent = T("home.errore_rete", "Connessione assente: il testo resta qui, riprova appena torna la rete.");
   } finally {
     inviando = false;
     invia.removeAttribute("aria-disabled");
-    invia.textContent = "Invia nel diario";
+    invia.textContent = T("home.invia", "Invia nel diario");
   }
 });
 
@@ -202,8 +202,13 @@ function mostraEsito(pensiero, valore, chiave) {
   document.getElementById("esito-giorno").textContent = pensiero ? formattaGiorno(pensiero.giorno) : "";
   const link = document.getElementById("esito-link");
   link.href = "/archivio?categoria=" + encodeURIComponent(chiave);
-  const chi = { "fuori-corso": "scrivono i fuori corso", "ex-allievi": "scrivono gli ex allievi", docenti: "scrivono i docenti" };
-  link.textContent = "Leggi cosa " + (chi[chiave] || `scrive il ${nomi[chiave] || "tuo gruppo"}`);
+  const chi = {
+    "fuori-corso": T("home.esito_link_fuori-corso", "Leggi cosa scrivono i fuori corso"),
+    "ex-allievi": T("home.esito_link_ex-allievi", "Leggi cosa scrivono gli ex allievi"),
+    docenti: T("home.esito_link_docenti", "Leggi cosa scrivono i docenti"),
+  };
+  link.textContent = chi[chiave] || T("home.esito_link_gruppo", "Leggi cosa scrive il {gruppo}",
+    { gruppo: nomi[chiave] || T("home.esito_link_tuo_gruppo", "tuo gruppo") });
 
   // Il timbro si riattiva a ogni invio.
   const timbro = campione.querySelector(".timbro");

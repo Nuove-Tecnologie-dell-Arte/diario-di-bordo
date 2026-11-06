@@ -25,6 +25,7 @@ diario/config.py   configurazione da .env
 diario/db.py       database SQLite (data/diario.db) e categorie
 diario/limiti.py   limiti di invio anti-spam
 diario/server.py   webserver (http.server della stdlib) e API
+diario/testi.py    testi dell'interfaccia (predefiniti + testi.json locale)
 public/            home (index.html + app.js), archivio (archivio.html + archivio.js),
                    comune.js, style.css, fonts/ (Atkinson Hyperlegible, serviti in locale)
 ```
@@ -35,8 +36,43 @@ campionario colori; le tinte sono in testa a `public/style.css`. I font sono
 serviti dal sito stesso, perché passare da Google Fonts farebbe arrivare a
 Google l'IP di chi visita.
 
-Il titolo e la descrizione della home si cambiano in `public/index.html`,
-nel blocco segnato da un commento.
+## Testi
+
+Tutti i testi dell'interfaccia (titoli, etichette, bottoni, messaggi di
+errore, title e description delle pagine, nomi dei gruppi) si cambiano senza
+toccare il codice e senza riavviare il server.
+
+- I predefiniti stanno in `diario/testi_predefiniti.json` (versionato: è
+  anche l'elenco completo delle chiavi).
+- Per cambiarne qualcuno si crea `testi.json` nella cartella del progetto
+  (non versionato; altro percorso con `DIARIO_TESTI` in `.env`) con solo le
+  chiavi da ridefinire:
+
+  ```json
+  {
+    "home.titolo": "Scrivi qualcosa per chi verrà dopo",
+    "comune.categoria.docenti": "Prof"
+  }
+  ```
+
+- Il server rilegge il file quando lo si salva: basta ricaricare la pagina.
+  Se il JSON non è valido, nel log compare un avviso e si usano i predefiniti.
+- `{nome}` dentro un testo è un segnaposto riempito dal programma (es.
+  `{max}`, `{cerca}`, `{n}`): va lasciato com'è.
+
+Le chiavi hanno un prefisso: `comune.*` (parti comuni, gruppi, date),
+`home.*`, `archivio.*`, `server.*` (messaggi restituiti dall'API).
+
+Per aggiungere un testo nuovo: si aggiunge la chiave in
+`diario/testi_predefiniti.json`, poi
+- nell'HTML si mette `data-testo="chiave"` su un elemento che contiene solo
+  testo, oppure `data-testo-<attributo>="chiave"` (es.
+  `data-testo-placeholder`, `data-testo-aria-label`, `data-testo-content`);
+  il server lo applica prima di inviare la pagina e `comune.js` di nuovo nel
+  browser;
+- nel JavaScript si usa `T("chiave", "testo di riserva", { parametri })`
+  (definita da `/testi.js`, incluso in ogni pagina prima di `comune.js`);
+- in Python si usa `testi.t("chiave", parametro=valore)` da `diario/testi.py`.
 
 ## API
 

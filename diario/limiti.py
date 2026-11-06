@@ -27,7 +27,7 @@ import threading
 import time
 from collections import defaultdict, deque
 
-from diario import config
+from diario import config, testi
 
 NOME_COOKIE = "diario_gettone"
 DURATA_COOKIE_S = 60 * 60 * 24 * 365
@@ -104,11 +104,11 @@ def controlla(gettone: str | None, ip: str) -> str | None:
     global _ultima_pulizia
     letto = leggi_gettone(gettone)
     if letto is None:
-        return "Sessione non valida: ricarica la pagina e riprova."
+        return testi.t("server.sessione_non_valida")
     ident, emesso = letto
     adesso = time.time()
     if adesso - emesso < config.ATTESA_MINIMA_S:
-        return "Un attimo di calma: aspetta qualche secondo e riprova."
+        return testi.t("server.troppo_presto")
 
     chiave_ip = _ip_anonimo(ip)
     with _lock:
@@ -120,13 +120,13 @@ def controlla(gettone: str | None, ip: str) -> str | None:
         ultimo = _browser.ultimo(ident, adesso)
         if ultimo is not None and adesso - ultimo < config.PAUSA_BROWSER_S:
             attesa = int(config.PAUSA_BROWSER_S - (adesso - ultimo)) + 1
-            return f"Hai appena scritto: aspetta {attesa} secondi prima del prossimo pensiero."
+            return testi.t("server.pausa_browser", secondi=attesa)
         if _browser.conta(ident, adesso) >= config.MAX_ORA_BROWSER:
-            return "Hai scritto molto nell'ultima ora: riprova più tardi."
+            return testi.t("server.max_ora_browser")
         if _ip.conta(chiave_ip, adesso) >= config.MAX_ORA_IP:
-            return "Troppi invii da questa rete nell'ultima ora: riprova più tardi."
+            return testi.t("server.max_ora_ip")
         if _globale.conta("tutti", adesso) >= config.MAX_ORA_GLOBALE:
-            return "Il diario sta ricevendo troppi pensieri: riprova tra poco."
+            return testi.t("server.max_ora_globale")
 
         _browser.registra(ident, adesso)
         _ip.registra(chiave_ip, adesso)

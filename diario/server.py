@@ -8,6 +8,7 @@ Pagine statiche da `public/`, più queste API JSON:
     POST /api/pensieri                  {testo, categoria, sito}  (sito = campo esca)
     GET  /api/export?dal_id=N           tutto per altri progetti (header X-Api-Key)
     GET  /api/health                    stato del servizio
+    GET  /testi.js                      testi dell'interfaccia (window.TESTI, window.T)
 """
 
 import hmac
@@ -20,7 +21,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from diario import config, db, limiti
+from diario import config, db, limiti, testi
 
 MAX_CORPO = 32 * 1024
 mimetypes.add_type("font/woff2", ".woff2")
@@ -87,6 +88,8 @@ class Gestore(BaseHTTPRequestHandler):
         if tipo.startswith("text/") or tipo in ("application/javascript", "application/json"):
             tipo += "; charset=utf-8"
         corpo = percorso.read_bytes()
+        if percorso.suffix == ".html":
+            corpo = testi.applica_html(corpo.decode("utf-8")).encode("utf-8")
         self.send_response(HTTPStatus.OK)
         self.send_header("Content-Type", tipo)
         self.send_header("Content-Length", str(len(corpo)))
@@ -121,11 +124,22 @@ class Gestore(BaseHTTPRequestHandler):
             except Exception as e:
                 return self._json(500, {"ok": False, "errore": str(e)})
 
+        if url.path == "/testi.js":
+            corpo = testi.script_js()
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "application/javascript; charset=utf-8")
+            self.send_header("Content-Length", str(len(corpo)))
+            self.send_header("Cache-Control", "no-cache")
+            self._intestazioni_sicurezza()
+            self.end_headers()
+            self.wfile.write(corpo)
+            return None
+
         if url.path == "/api/categorie":
             conti = db.conteggi((primo("cerca") or "").strip()[:200] or None)
             return self._json(200, {
                 "categorie": [
-                    {"chiave": k, "nome": nome, "conteggio": conti[k]} for k, nome in db.CATEGORIE
+                    {"chiave": k, "nome": testi.t(f"comune.categoria.{k}", nome), "conteggio": conti[k]} for k, nome in db.CATEGORIE
                 ],
                 "testo_max": config.TESTO_MAX,
             })
@@ -133,7 +147,7 @@ class Gestore(BaseHTTPRequestHandler):
         if url.path == "/api/pensieri":
             categoria = primo("categoria") or None
             if categoria and categoria not in db.CHIAVI_CATEGORIE:
-                return self._errore(400, "Categoria sconosciuta.")
+                return self._errore(400, testi.t("server.categoria_sconosciuta"))
             cerca = (primo("cerca") or "").strip()[:200] or None
             pagina = _int(primo("pagina"), 1, 1, 100000)
             per_pagina = _int(primo("per_pagina"), 20, 1, 100)
@@ -146,31 +160,31 @@ class Gestore(BaseHTTPRequestHandler):
             return self._json(200, db.esporta(_int(primo("dal_id"), 0, 0, 2**62)))
 
         if url.path.startswith("/api/"):
-            return self._errore(404, "Non trovato.")
+            return self._errore(404, testi.t("server.non_trovato"))
 
         nome = PAGINE.get(url.path.rstrip("/") or "/", url.path.lstrip("/"))
         percorso = (config.PUBLIC_DIR / nome).resolve()
         if config.PUBLIC_DIR.resolve() not in percorso.parents or not percorso.is_file():
-            return self._errore(404, "Pagina non trovata.")
+            return self._errore(404, testi.t("server.pagina_non_trovata"))
         return self._file(percorso)
 
     # --- POST ----------------------------------------------------------
 
     def do_POST(self):
         if urlparse(self.path).path != "/api/pensieri":
-            return self._errore(404, "Non trovato.")
+            return self._errore(404, testi.t("server.non_trovato"))
         try:
             lunghezza = int(self.headers.get("Content-Length", "0"))
         except ValueError:
             lunghezza = 0
         if lunghezza <= 0 or lunghezza > MAX_CORPO:
-            return self._errore(413, "Richiesta troppo grande.")
+            return self._errore(413, testi.t("server.richiesta_troppo_grande"))
         try:
             dati = json.loads(self.rfile.read(lunghezza).decode("utf-8"))
             if not isinstance(dati, dict):
                 raise ValueError
         except (ValueError, UnicodeDecodeError):
-            return self._errore(400, "Richiesta non valida.")
+            return self._errore(400, testi.t("server.richiesta_non_valida"))
 
         # Campo esca: invisibile agli umani, i bot lo compilano.
         if str(dati.get("sito") or "").strip():
@@ -178,15 +192,15 @@ class Gestore(BaseHTTPRequestHandler):
 
         categoria = str(dati.get("categoria") or "")
         if categoria not in db.CHIAVI_CATEGORIE:
-            return self._errore(400, "Scegli a quale gruppo appartieni.")
+            return self._errore(400, testi.t("server.scegli_gruppo"))
 
         testo = db.normalizza_testo(str(dati.get("testo") or ""))
         if len(testo) < config.TESTO_MIN:
-            return self._errore(400, "Il pensiero è troppo corto.")
+            return self._errore(400, testi.t("server.troppo_corto"))
         if len(testo) > config.TESTO_MAX:
-            return self._errore(400, f"Il pensiero supera i {config.TESTO_MAX} caratteri.")
+            return self._errore(400, testi.t("server.troppo_lungo", max=config.TESTO_MAX))
         if db.e_duplicato(testo):
-            return self._errore(409, "Questo pensiero è già nel diario.")
+            return self._errore(409, testi.t("server.duplicato"))
 
         blocco = limiti.controlla(self._gettone(), self._ip())
         if blocco:

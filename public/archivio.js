@@ -37,7 +37,7 @@ function scriviUrl() {
 }
 
 function pensieri(n) {
-  return n === 1 ? "1 pensiero" : `${n} pensieri`;
+  return n === 1 ? T("archivio.pensiero_uno", "1 pensiero") : T("archivio.pensieri_n", "{n} pensieri", { n });
 }
 
 // Testo con le occorrenze della ricerca evidenziate, senza mai usare innerHTML.
@@ -74,7 +74,7 @@ function disegnaSpettro() {
   spettroBox.hidden = totale === 0;
   document.getElementById("spettro-totale").textContent = totale;
   spettroBox.querySelector(".spettro-didascalia span").textContent =
-    stato.cerca ? `Chi ha scritto «${stato.cerca}»` : "Chi scrive nel diario";
+    stato.cerca ? T("archivio.spettro_chi_cerca", "Chi ha scritto «{cerca}»", { cerca: stato.cerca }) : T("archivio.spettro_chi", "Chi scrive nel diario");
   spettro.replaceChildren(...categorie.filter((c) => c.conteggio > 0).map((c) => {
     const i = document.createElement("i");
     i.dataset.gruppo = c.chiave;
@@ -85,14 +85,14 @@ function disegnaSpettro() {
 
 function disegnaFiltri() {
   const totale = categorie.reduce((s, c) => s + c.conteggio, 0);
-  const voci = [{ chiave: "", nome: "Tutti", conteggio: totale }, ...categorie];
+  const voci = [{ chiave: "", nome: T("archivio.tutti", "Tutti"), conteggio: totale }, ...categorie];
   filtri.replaceChildren(...voci.map((c) => {
     const b = document.createElement("button");
     b.type = "button";
     b.className = "filtro";
     b.dataset.gruppo = c.chiave;
     b.setAttribute("aria-pressed", String(c.chiave === stato.categoria));
-    b.setAttribute("aria-label", `${c.nome}, ${pensieri(c.conteggio)}`);
+    b.setAttribute("aria-label", T("archivio.filtro_etichetta", "{nome}, {pensieri}", { nome: c.nome, pensieri: pensieri(c.conteggio) }));
     const t = document.createElement("span");
     t.className = "tessera-piccola";
     const nome = document.createElement("span");
@@ -135,7 +135,7 @@ async function carica({ focus = false } = {}) {
       riepilogo.scrollIntoView({ block: "start" });
     }
   } catch {
-    if (mia === richiesta) riepilogo.textContent = "Non riesco a caricare l'archivio: riprova tra poco.";
+    if (mia === richiesta) riepilogo.textContent = T("archivio.errore_caricamento", "Non riesco a caricare l'archivio: riprova tra poco.");
   } finally {
     if (mia === richiesta) elenco.removeAttribute("aria-busy");
   }
@@ -144,7 +144,7 @@ async function carica({ focus = false } = {}) {
 function disegna(dati) {
   const parti = [pensieri(dati.totale)];
   if (stato.categoria) parti.push(nomi[stato.categoria]);
-  if (stato.cerca) parti.push(`con «${stato.cerca}»`);
+  if (stato.cerca) parti.push(T("archivio.riepilogo_cerca", "con «{cerca}»", { cerca: stato.cerca }));
   riepilogo.replaceChildren();
   const b = document.createElement("b");
   b.textContent = parti[0];
@@ -158,7 +158,7 @@ function disegna(dati) {
   pos.replaceChildren();
   const sr = document.createElement("span");
   sr.className = "sr";
-  sr.textContent = `Pagina ${dati.pagina} di ${dati.pagine}`;
+  sr.textContent = T("archivio.pagina_di", "Pagina {pagina} di {pagine}", { pagina: dati.pagina, pagine: dati.pagine });
   const vis = document.createElement("span");
   vis.setAttribute("aria-hidden", "true");
   vis.textContent = `${dati.pagina} / ${dati.pagine}`;
@@ -204,18 +204,18 @@ function statoVuoto() {
   const p = document.createElement("p");
   const a = document.createElement("a");
   if (stato.cerca || stato.categoria) {
-    p.textContent = stato.cerca ? `Nessun pensiero con «${stato.cerca}».` : "Questo gruppo non ha ancora scritto.";
+    p.textContent = stato.cerca ? T("archivio.vuoto_cerca", "Nessun pensiero con «{cerca}».", { cerca: stato.cerca }) : T("archivio.vuoto_gruppo", "Questo gruppo non ha ancora scritto.");
     a.href = "/archivio";
-    a.textContent = "Vedi tutti i pensieri";
+    a.textContent = T("archivio.vedi_tutti", "Vedi tutti i pensieri");
     a.addEventListener("click", (e) => {
       e.preventDefault();
       stato.categoria = ""; stato.cerca = ""; stato.pagina = 1; cerca.value = "";
       aggiornaTutto();
     });
   } else {
-    p.textContent = "Il diario è ancora vuoto.";
+    p.textContent = T("archivio.vuoto", "Il diario è ancora vuoto.");
     a.href = "/";
-    a.textContent = "Scrivi il primo pensiero";
+    a.textContent = T("archivio.scrivi_primo", "Scrivi il primo pensiero");
   }
   li.append(p, a);
   return li;

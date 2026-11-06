@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Diario di bordo</title>
-  <meta name="description" content="Il diario anonimo di allievi e docenti: scrivi un pensiero, leggi quelli degli altri.">
+  <title data-testo="home.titolo_pagina">Diario di bordo</title>
+  <meta name="description" data-testo-content="home.descrizione_pagina" content="Il diario anonimo di allievi e docenti: scrivi un pensiero, leggi quelli degli altri.">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#d6d8df" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#16161e" media="(prefers-color-scheme: dark)">
@@ -12,17 +12,17 @@
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <a class="salta" href="#contenuto">Vai al contenuto</a>
+  <a class="salta" href="#contenuto" data-testo="comune.salta_contenuto">Vai al contenuto</a>
 
   <header class="barra">
     <div class="barra-dentro">
       <a class="marchio" href="/">
         <span class="striscia" aria-hidden="true"><i data-gruppo="anno-1"></i><i data-gruppo="anno-2"></i><i data-gruppo="anno-3"></i><i data-gruppo="anno-4"></i><i data-gruppo="anno-5"></i><i data-gruppo="fuori-corso"></i><i data-gruppo="ex-allievi"></i><i data-gruppo="docenti"></i></span>
-        Diario di bordo
+        <span data-testo="comune.nome_sito">Diario di bordo</span>
       </a>
-      <nav aria-label="Sezioni">
-        <a href="/" aria-current="page">Scrivi</a>
-        <a href="/archivio">Archivio</a>
+      <nav aria-label="Sezioni" data-testo-aria-label="comune.nav_etichetta">
+        <a href="/" aria-current="page" data-testo="comune.nav_scrivi">Scrivi</a>
+        <a href="/archivio" data-testo="comune.nav_archivio">Archivio</a>
       </nav>
     </div>
   </header>
@@ -30,11 +30,12 @@
   <main id="contenuto" class="pagina">
     <div class="colonna">
       <!-- ==========================================================
-           TITOLO E DESCRIZIONE: modificare qui il testo della home.
+           TITOLO E DESCRIZIONE: i testi si cambiano in testi.json
+           (chiavi home.titolo e home.descrizione), vedi README.
            ========================================================== -->
       <section class="intestazione">
-        <h1>Lascia un segno nel diario</h1>
-        <p>
+        <h1 data-testo="home.titolo">Lascia un segno nel diario</h1>
+        <p data-testo="home.descrizione">
           Uno spazio comune dove allievi e docenti lasciano un pensiero, breve
           o lungo, sul percorso che stanno facendo. Non serve il nome: basta
           il tuo gruppo.
@@ -44,8 +45,8 @@
 
       <form id="form" class="form" novalidate>
         <div class="area-testo">
-          <label class="etichetta" for="testo">Il tuo pensiero</label>
-          <textarea id="testo" name="testo" rows="7" placeholder="Scrivi qui, anche solo una frase…"
+          <label class="etichetta" for="testo" data-testo="home.etichetta_testo">Il tuo pensiero</label>
+          <textarea id="testo" name="testo" rows="7" placeholder="Scrivi qui, anche solo una frase…" data-testo-placeholder="home.segnaposto_testo"
                     aria-describedby="stato-bozza errore-testo" autocomplete="off"></textarea>
           <div class="sotto-campo">
             <span id="stato-bozza"></span>
@@ -55,8 +56,8 @@
         </div>
 
         <fieldset id="gruppo" aria-describedby="aiuto-gruppo">
-          <legend class="etichetta">Il tuo gruppo</legend>
-          <p id="aiuto-gruppo" class="aiuto">È l'unica cosa che il diario sa di te.</p>
+          <legend class="etichetta" data-testo="home.etichetta_gruppo">Il tuo gruppo</legend>
+          <p id="aiuto-gruppo" class="aiuto" data-testo="home.aiuto_gruppo">È l'unica cosa che il diario sa di te.</p>
           <div class="campionario" id="categorie">
             <!-- riempito da app.js con le categorie del server -->
           </div>
@@ -70,24 +71,24 @@
         </div>
 
         <div class="azioni">
-          <button class="bottone" id="invia" type="submit">Invia nel diario</button>
-          <p class="promessa"><b>Anonimo</b> · pubblicato subito · non si può modificare</p>
+          <button class="bottone" id="invia" type="submit" data-testo="home.invia">Invia nel diario</button>
+          <p class="promessa"><b data-testo="home.promessa_anonimo">Anonimo</b><span data-testo="home.promessa"> · pubblicato subito · non si può modificare</span></p>
         </div>
         <p class="messaggio" id="messaggio" role="alert"></p>
 
         <details class="spiegazione">
-          <summary>Come funziona l'anonimato</summary>
+          <summary data-testo="home.spiegazione_titolo">Come funziona l'anonimato</summary>
           <ul>
-            <li>Del tuo pensiero il diario conserva solo il testo, il gruppo, il giorno e l'ora dell'invio. Nell'archivio si vede solo il giorno, mai l'ora.</li>
-            <li>Non salva nomi, email né indirizzi IP. Un cookie tecnico serve solo a evitare invii a raffica.</li>
-            <li>Chiunque può scegliere qualunque gruppo: è sulla fiducia.</li>
-            <li>Una volta inviato, il pensiero non si può modificare. Per segnalarne uno inappropriato, rivolgiti a un docente.</li>
+            <li data-testo="home.spiegazione_1">Del tuo pensiero il diario conserva solo il testo, il gruppo, il giorno e l'ora dell'invio. Nell'archivio si vede solo il giorno, mai l'ora.</li>
+            <li data-testo="home.spiegazione_2">Non salva nomi, email né indirizzi IP. Un cookie tecnico serve solo a evitare invii a raffica.</li>
+            <li data-testo="home.spiegazione_3">Chiunque può scegliere qualunque gruppo: è sulla fiducia.</li>
+            <li data-testo="home.spiegazione_4">Una volta inviato, il pensiero non si può modificare. Per segnalarne uno inappropriato, rivolgiti a un docente.</li>
           </ul>
         </details>
       </form>
 
       <section id="esito" class="esito" hidden aria-labelledby="esito-titolo">
-        <h2 id="esito-titolo" tabindex="-1">Il tuo pensiero è nel diario</h2>
+        <h2 id="esito-titolo" tabindex="-1" data-testo="home.esito_titolo">Il tuo pensiero è nel diario</h2>
         <article class="campione" id="esito-campione">
           <div class="campione-testa">
             <span class="campione-gruppo" id="esito-gruppo"></span>
@@ -97,11 +98,11 @@
             <p class="campione-testo" id="esito-testo"></p>
             <span class="campione-giorno" id="esito-giorno"></span>
           </div>
-          <span class="timbro" aria-hidden="true">Pubblicato</span>
+          <span class="timbro" aria-hidden="true" data-testo="home.esito_timbro">Pubblicato</span>
         </article>
         <div class="esito-azioni">
-          <a class="bottone" id="esito-link" href="/archivio">Leggi il tuo gruppo</a>
-          <button class="bottone secondario" id="esito-altro" type="button">Scrivine un altro</button>
+          <a class="bottone" id="esito-link" href="/archivio" data-testo="home.esito_link">Leggi il tuo gruppo</a>
+          <button class="bottone secondario" id="esito-altro" type="button" data-testo="home.esito_altro">Scrivine un altro</button>
         </div>
       </section>
     </div>
@@ -111,6 +112,7 @@
     <symbol id="i-spunta" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
     <symbol id="i-avviso" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.5v.01"/></symbol>
   </svg>
+  <script src="/testi.js"></script>
   <script src="/comune.js"></script>
   <script src="/app.js"></script>
 </body>
