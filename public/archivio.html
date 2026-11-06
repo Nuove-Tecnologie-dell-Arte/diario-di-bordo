@@ -50,6 +50,20 @@
       <input type="search" id="cerca" placeholder="Cerca una parola…" autocomplete="off" enterkeyhint="search">
     </div>
 
+    <div class="filtro-data">
+      <div class="filtri periodi" id="periodi" role="group" aria-label="Filtra per data" data-testo-aria-label="archivio.data.gruppo">
+        <button type="button" class="filtro" data-periodo="" aria-pressed="true" data-testo="archivio.data.sempre">Sempre</button>
+        <button type="button" class="filtro" data-periodo="oggi" aria-pressed="false" data-testo="archivio.data.oggi">Oggi</button>
+        <button type="button" class="filtro" data-periodo="ieri" aria-pressed="false" data-testo="archivio.data.ieri">Ieri</button>
+        <button type="button" class="filtro" data-periodo="settimana" aria-pressed="false" data-testo="archivio.data.settimana">Ultima settimana</button>
+        <button type="button" class="filtro" data-periodo="mese" aria-pressed="false" data-testo="archivio.data.mese">Ultimo mese</button>
+      </div>
+      <div class="giorno-scelto">
+        <label for="giorno" data-testo="archivio.data.giorno">Un giorno preciso</label>
+        <input type="date" id="giorno" min="1970-01-01" max="9999-12-31">
+      </div>
+    </div>
+
     <p class="riepilogo" id="riepilogo" tabindex="-1" aria-live="polite"></p>
 
     <ol class="elenco" id="elenco"></ol>
