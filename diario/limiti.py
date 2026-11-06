@@ -59,14 +59,15 @@ def leggi_gettone(valore: str | None) -> tuple[str, int] | None:
 
 
 class _Finestra:
-    """Contatori a finestra scorrevole di un'ora, per chiave."""
+    """Contatori a finestra scorrevole (di un'ora, salvo `durata`), per chiave."""
 
-    def __init__(self) -> None:
+    def __init__(self, durata: float = 3600) -> None:
+        self._durata = durata
         self._eventi: dict[str, deque] = defaultdict(deque)
 
     def _pulisci(self, chiave: str, adesso: float) -> deque:
         coda = self._eventi[chiave]
-        while coda and coda[0] <= adesso - 3600:
+        while coda and coda[0] <= adesso - self._durata:
             coda.popleft()
         return coda
 

@@ -26,6 +26,7 @@ diario/db.py       database SQLite (data/diario.db) e categorie
 diario/limiti.py   limiti di invio anti-spam
 diario/server.py   webserver (http.server della stdlib) e API
 diario/testi.py    testi dell'interfaccia (predefiniti + testi.json locale)
+diario/plancia.py  plancia: modifica dei testi dal browser, con password
 public/            home (index.html + app.js), archivio (archivio.html + archivio.js),
                    comune.js, style.css, fonts/ (Atkinson Hyperlegible, serviti in locale)
 ```
@@ -73,6 +74,46 @@ Per aggiungere un testo nuovo: si aggiunge la chiave in
 - nel JavaScript si usa `T("chiave", "testo di riserva", { parametri })`
   (definita da `/testi.js`, incluso in ogni pagina prima di `comune.js`);
 - in Python si usa `testi.t("chiave", parametro=valore)` da `diario/testi.py`.
+
+## Plancia
+
+I testi si possono cambiare anche dal browser, su **`/plancia`** (es.
+`http://127.0.0.1:8007/plancia`). La pagina non è linkata da nessuna parte,
+è esclusa da `robots.txt` e ha `noindex`.
+
+- Si accende mettendo una password in `.env`:
+
+  ```bash
+  python3 -c "import secrets; print(secrets.token_urlsafe(18))"
+  # poi in .env:  DIARIO_PLANCIA_PASSWORD=<la password generata>
+  ```
+
+  Senza password (variabile vuota o assente) `/plancia` risponde 404.
+- Elenca tutte le chiavi di `diario/testi_predefiniti.json` divise per
+  prefisso, con il predefinito, il valore attuale e se è modificato; c'è una
+  ricerca e il filtro "Solo i testi modificati". Ogni chiave modificata si
+  può riportare al predefinito.
+- Salvando, in `testi.json` finiscono solo le chiavi diverse dal predefinito
+  (quelle che il sito non conosce, aggiunte a mano, restano). Si toccano
+  solo i campi cambiati nella pagina, quindi una modifica fatta a mano al
+  file nel frattempo non va persa. Un testo che non ha esattamente gli stessi
+  segnaposto `{nome}` del predefinito viene rifiutato.
+- Se `testi.json` non è JSON valido la plancia lo dice e non lo sovrascrive:
+  per farlo bisogna spuntare la conferma, e prima viene copiato in
+  `testi.json.<data>.bak`.
+- Sicurezza: sessione in un cookie firmato con `DIARIO_SEGRETO` (8 ore,
+  HttpOnly, SameSite=Strict, Secure se si arriva in HTTPS dal proxy), token
+  CSRF e controllo dell'Origin su ogni salvataggio, al massimo 5 password
+  sbagliate ogni 15 minuti per IP e 30 in tutto (in memoria). Cambiare la
+  password chiude tutte le sessioni aperte. La plancia non mostra pensieri
+  né IP.
+
+Sul lab, dopo `git pull`: aggiungere `DIARIO_PLANCIA_PASSWORD=...` in `.env`
+nella cartella del progetto, poi
+
+```bash
+sudo systemctl restart diario-di-bordo
+```
 
 ## API
 

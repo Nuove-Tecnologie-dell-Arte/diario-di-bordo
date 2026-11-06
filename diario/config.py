@@ -56,6 +56,10 @@ EXPORT_API_KEY = os.environ.get("DIARIO_EXPORT_API_KEY", "")
 # Testi dell'interfaccia: override locale dei predefiniti (vedi diario/testi.py).
 TESTI_PATH = _percorso("DIARIO_TESTI", "testi.json")
 
+# Password della plancia (/plancia, modifica dei testi dal browser, vedi
+# diario/plancia.py). Vuota = plancia spenta (risponde 404).
+PLANCIA_PASSWORD = os.environ.get("DIARIO_PLANCIA_PASSWORD", "")
+
 # --- Testi ---
 TESTO_MIN = _int("DIARIO_TESTO_MIN", 3)
 TESTO_MAX = _int("DIARIO_TESTO_MAX", 5000)

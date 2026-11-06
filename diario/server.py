@@ -11,6 +11,8 @@ Pagine statiche da `public/`, più queste API JSON:
     GET  /api/export?dal_id=N           tutto per altri progetti (header X-Api-Key)
     GET  /api/health                    stato del servizio
     GET  /testi.js                      testi dell'interfaccia (window.TESTI, window.T)
+
+Più la plancia per modificare i testi (/plancia, vedi diario/plancia.py).
 """
 
 import hmac
@@ -25,7 +27,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
-from diario import config, db, limiti, testi
+from diario import config, db, limiti, plancia, testi
 
 MAX_CORPO = 32 * 1024
 mimetypes.add_type("font/woff2", ".woff2")
@@ -60,6 +62,10 @@ def _giorni(dal: str | None, al: str | None) -> tuple[str | None, str | None, st
     if valori["dal"] and valori["al"] and valori["dal"] > valori["al"]:
         return None, None, testi.t("server.data_ordine", ERRORI_DATA["ordine"])
     return valori["dal"], valori["al"], None
+
+
+def _e_plancia(percorso: str) -> bool:
+    return percorso == plancia.PERCORSO or percorso.startswith(plancia.PERCORSO + "/")
 
 
 def _int(valore: str | None, predefinito: int, minimo: int, massimo: int) -> int:
@@ -202,6 +208,11 @@ class Gestore(BaseHTTPRequestHandler):
         if url.path.startswith("/api/"):
             return self._errore(404, testi.t("server.non_trovato"))
 
+        if _e_plancia(url.path):
+            if not plancia.attiva():
+                return self._errore(404, testi.t("server.pagina_non_trovata"))
+            return plancia.get(self, url)
+
         nome = PAGINE.get(url.path.rstrip("/") or "/", url.path.lstrip("/"))
         percorso = (config.PUBLIC_DIR / nome).resolve()
         if config.PUBLIC_DIR.resolve() not in percorso.parents or not percorso.is_file():
@@ -211,7 +222,10 @@ class Gestore(BaseHTTPRequestHandler):
     # --- POST ----------------------------------------------------------
 
     def do_POST(self):
-        if urlparse(self.path).path != "/api/pensieri":
+        url = urlparse(self.path)
+        if _e_plancia(url.path) and plancia.attiva():
+            return plancia.post(self, url)
+        if url.path != "/api/pensieri":
             return self._errore(404, testi.t("server.non_trovato"))
         try:
             lunghezza = int(self.headers.get("Content-Length", "0"))
