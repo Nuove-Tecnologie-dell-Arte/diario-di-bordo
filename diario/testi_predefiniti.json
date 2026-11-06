@@ -15,7 +15,6 @@
   "comune.categoria.fuori-corso": "Fuori corso",
   "comune.categoria.ex-allievi": "Ex allievi",
   "comune.categoria.docenti": "Docenti",
-
   "home.titolo_pagina": "Diario di bordo",
   "home.descrizione_pagina": "Il diario anonimo di allievi e docenti: scrivi un pensiero, leggi quelli degli altri.",
   "home.titolo": "Lascia un segno nel diario",
@@ -51,11 +50,10 @@
   "home.errore_controlla": "Controlla il testo e riprova.",
   "home.errore_generico": "Qualcosa è andato storto: riprova tra poco. Il testo resta qui.",
   "home.errore_rete": "Connessione assente: il testo resta qui, riprova appena torna la rete.",
-
   "archivio.titolo_pagina": "Archivio · Diario di bordo",
   "archivio.descrizione_pagina": "Tutti i pensieri del diario, da leggere per gruppo.",
   "archivio.titolo": "Archivio",
-  "archivio.descrizione": "Tutti i pensieri del diario, dal più recente. Scegli un gruppo o cerca una parola.",
+  "archivio.descrizione": "Tutti i pensieri del diario, dal più recente. Scegli un gruppo, un periodo o cerca una parola.",
   "archivio.spettro_chi": "Chi scrive nel diario",
   "archivio.spettro_chi_cerca": "Chi ha scritto «{cerca}»",
   "archivio.spettro_pensieri": "pensieri",
@@ -77,7 +75,19 @@
   "archivio.vedi_tutti": "Vedi tutti i pensieri",
   "archivio.vuoto": "Il diario è ancora vuoto.",
   "archivio.scrivi_primo": "Scrivi il primo pensiero",
-
+  "archivio.data.gruppo": "Filtra per data",
+  "archivio.data.sempre": "Sempre",
+  "archivio.data.oggi": "Oggi",
+  "archivio.data.ieri": "Ieri",
+  "archivio.data.settimana": "Ultima settimana",
+  "archivio.data.mese": "Ultimo mese",
+  "archivio.data.giorno": "Un giorno preciso",
+  "archivio.data.riepilogo-giorno": "del {giorno}",
+  "archivio.data.riepilogo-oggi": "di oggi",
+  "archivio.data.riepilogo-ieri": "di ieri",
+  "archivio.data.riepilogo-settimana": "dell'ultima settimana",
+  "archivio.data.riepilogo-mese": "dell'ultimo mese",
+  "archivio.data.vuoto": "Nessun pensiero in questo periodo.",
   "server.non_trovato": "Non trovato.",
   "server.pagina_non_trovata": "Pagina non trovata.",
   "server.categoria_sconosciuta": "Categoria sconosciuta.",
@@ -92,5 +102,8 @@
   "server.pausa_browser": "Hai appena scritto: aspetta {secondi} secondi prima del prossimo pensiero.",
   "server.max_ora_browser": "Hai scritto molto nell'ultima ora: riprova più tardi.",
   "server.max_ora_ip": "Troppi invii da questa rete nell'ultima ora: riprova più tardi.",
-  "server.max_ora_globale": "Il diario sta ricevendo troppi pensieri: riprova tra poco."
+  "server.max_ora_globale": "Il diario sta ricevendo troppi pensieri: riprova tra poco.",
+  "server.data_dal": "Data di inizio non valida: usa il formato AAAA-MM-GG.",
+  "server.data_al": "Data di fine non valida: usa il formato AAAA-MM-GG.",
+  "server.data_ordine": "La data di inizio viene dopo quella di fine."
 }

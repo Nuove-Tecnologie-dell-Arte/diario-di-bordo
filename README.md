@@ -3,7 +3,7 @@
 Diario condiviso per allievi e docenti: si lascia un pensiero anonimo
 indicando solo il proprio gruppo (Docenti, 1°–5° anno, Fuori corso, Ex
 allievi). I pensieri sono pubblicati subito e si consultano nell'archivio,
-filtrando per gruppo o cercando una parola. Pensato per girare su
+filtrando per gruppo, per giorno o cercando una parola. Pensato per girare su
 computersopra (WSL del lab) e per essere letto anche da Oracolo.
 
 ## Avvio
@@ -79,11 +79,20 @@ Per aggiungere un testo nuovo: si aggiunge la chiave in
 | Metodo | Percorso | Cosa fa |
 |---|---|---|
 | GET | `/api/categorie` | categorie con il numero di pensieri |
-| GET | `/api/categorie?cerca=` | come sopra, contando solo i pensieri che contengono il testo |
-| GET | `/api/pensieri?categoria=&cerca=&pagina=&per_pagina=` | archivio paginato, dal più recente; per ogni pensiero solo il `giorno`, mai l'ora |
+| GET | `/api/categorie?cerca=&dal=&al=` | come sopra, contando solo i pensieri che contengono il testo e/o scritti tra `dal` e `al` |
+| GET | `/api/pensieri?categoria=&cerca=&dal=&al=&pagina=&per_pagina=` | archivio paginato, dal più recente; per ogni pensiero solo il `giorno`, mai l'ora |
 | POST | `/api/pensieri` | `{"testo", "categoria"}` → nuovo pensiero |
 | GET | `/api/export?dal_id=N` | tutti i pensieri con id > N, header `X-Api-Key` |
 | GET | `/api/health` | stato del servizio |
+
+`dal` e `al` sono giorni `AAAA-MM-GG`, estremi inclusi, tutti e due
+facoltativi (`dal=2026-11-06&al=2026-11-06` = solo quel giorno). Il giorno è
+quello del server (`created_at` è in ora locale del server), lo stesso che
+l'archivio mostra sotto ogni pensiero. Un valore non valido, o `dal` dopo
+`al`, dà `400` con `{"errore": "..."}`. Le scorciatoie dell'archivio (Oggi,
+Ieri, Ultima settimana = ultimi 7 giorni, Ultimo mese = ultimi 30 giorni)
+sono calcolate dal browser e tradotte in `dal`/`al`. Si filtra
+solo per giorno, mai per ora.
 
 ## Condividere il database con altri progetti
 

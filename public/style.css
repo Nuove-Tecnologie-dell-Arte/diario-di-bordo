@@ -339,6 +339,23 @@ legend { padding: 0; }
 .archivio-colonna { max-width: 760px; }
 .ricerca .icona { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--testo-2); pointer-events: none; }
 .ricerca input { padding-left: 44px; min-height: 50px; }
+/* Filtro per data: scorciatoie (stessi .filtro dei gruppi, senza tessera) e un giorno preciso. */
+.filtro-data { margin-top: 14px; }
+.filtri.periodi { margin-bottom: 10px; }
+.periodi .filtro { padding: 0 14px; }
+.giorno-scelto { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.giorno-scelto label { font-size: .9375rem; font-weight: 600; color: var(--testo-2); }
+.giorno-scelto input[type="date"] {
+  font: inherit; font-size: .9375rem; color: var(--testo);
+  min-height: 44px; padding: 0 12px;
+  background: var(--campo); border: 1px solid var(--bordo-campo); border-radius: var(--raggio-campo);
+  color-scheme: light dark;
+  transition: border-color .15s, box-shadow .15s;
+}
+.giorno-scelto input[type="date"]:hover { border-color: var(--testo-2); }
+.giorno-scelto input[type="date"]:focus-visible { outline: none; border-color: var(--accento); box-shadow: 0 0 0 1px var(--accento); }
+.giorno-scelto input[type="date"][data-attivo] { border-color: var(--testo); box-shadow: 0 0 0 1px var(--testo); }
+
 .riepilogo { margin: 18px 0 16px; font-size: .9375rem; color: var(--testo-2); min-height: 1.5em; }
 .riepilogo:focus { outline: none; }
 .riepilogo b { color: var(--testo); }

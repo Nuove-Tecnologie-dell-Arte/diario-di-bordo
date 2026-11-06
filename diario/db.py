@@ -117,7 +117,8 @@ def _escape_like(s: str) -> str:
     return s.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
 
 
-def _filtro(categoria: str | None, cerca: str | None) -> tuple[str, list]:
+def _filtro(categoria: str | None, cerca: str | None,
+            dal: str | None = None, al: str | None = None) -> tuple[str, list]:
     dove = ["status = 'pubblicato'"]
     parametri: list = []
     if categoria:
@@ -126,12 +127,23 @@ def _filtro(categoria: str | None, cerca: str | None) -> tuple[str, list]:
     if cerca:
         dove.append("testo LIKE ? ESCAPE '\\'")
         parametri.append(f"%{_escape_like(cerca)}%")
+    # Intervallo di giorni ('AAAA-MM-GG', estremi inclusi). created_at è in
+    # ora locale del server, quindi il giorno confrontato è lo stesso che le
+    # pagine mostrano come `giorno`. Confronto per intervallo, così l'indice
+    # su created_at resta utilizzabile.
+    if dal:
+        dove.append("created_at >= ?")
+        parametri.append(f"{dal} 00:00:00")
+    if al:
+        dove.append("created_at <= ?")
+        parametri.append(f"{al} 23:59:59")
     return " AND ".join(dove), parametri
 
 
-def elenca(categoria: str | None, cerca: str | None, pagina: int, per_pagina: int) -> dict:
+def elenca(categoria: str | None, cerca: str | None, pagina: int, per_pagina: int,
+           dal: str | None = None, al: str | None = None) -> dict:
     """Pagina di pensieri pubblicati, dal più recente."""
-    clausola, parametri = _filtro(categoria, cerca)
+    clausola, parametri = _filtro(categoria, cerca, dal, al)
     with connessione() as conn:
         totale = conn.execute(f"SELECT COUNT(*) FROM pensieri WHERE {clausola}", parametri).fetchone()[0]
         pagine = max(1, -(-totale // per_pagina))
@@ -148,9 +160,10 @@ def elenca(categoria: str | None, cerca: str | None, pagina: int, per_pagina: in
     }
 
 
-def conteggi(cerca: str | None = None) -> dict[str, int]:
-    """Pensieri per categoria; con `cerca`, solo quelli che contengono il testo."""
-    clausola, parametri = _filtro(None, cerca)
+def conteggi(cerca: str | None = None, dal: str | None = None, al: str | None = None) -> dict[str, int]:
+    """Pensieri per categoria; con `cerca`, solo quelli che contengono il testo;
+    con `dal`/`al`, solo quelli scritti in quei giorni."""
+    clausola, parametri = _filtro(None, cerca, dal, al)
     with connessione() as conn:
         righe = conn.execute(
             f"SELECT categoria, COUNT(*) AS n FROM pensieri WHERE {clausola} GROUP BY categoria",

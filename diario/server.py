@@ -5,6 +5,8 @@ Pagine statiche da `public/`, più queste API JSON:
     GET  /api/categorie                 elenco categorie con conteggi
     GET  /api/pensieri?categoria=&cerca=&pagina=&per_pagina=
                                         archivio paginato, dal più recente
+                                        (anche /api/categorie accetta cerca=, e
+                                        tutti e due dal=&al= AAAA-MM-GG inclusi)
     POST /api/pensieri                  {testo, categoria, sito}  (sito = campo esca)
     GET  /api/export?dal_id=N           tutto per altri progetti (header X-Api-Key)
     GET  /api/health                    stato del servizio
@@ -14,7 +16,9 @@ Pagine statiche da `public/`, più queste API JSON:
 import hmac
 import json
 import mimetypes
+import re
 import sys
+from datetime import date
 from http import HTTPStatus
 from http.cookies import SimpleCookie
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -26,6 +30,36 @@ from diario import config, db, limiti, testi
 MAX_CORPO = 32 * 1024
 mimetypes.add_type("font/woff2", ".woff2")
 PAGINE = {"/": "index.html", "/archivio": "archivio.html"}
+
+
+# Messaggi d'errore del filtro per data.
+ERRORI_DATA = {
+    "dal": "Data di inizio non valida: usa il formato AAAA-MM-GG.",
+    "al": "Data di fine non valida: usa il formato AAAA-MM-GG.",
+    "ordine": "La data di inizio viene dopo quella di fine.",
+}
+_RE_GIORNO = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
+
+
+def _giorni(dal: str | None, al: str | None) -> tuple[str | None, str | None, str | None]:
+    """Valida `dal` e `al` (AAAA-MM-GG, giorni esistenti). Restituisce
+    (dal, al, errore): vuoti diventano None, errore è None se tutto va bene."""
+    valori = {}
+    for nome, valore in (("dal", dal), ("al", al)):
+        valore = (valore or "").strip()
+        if not valore:
+            valori[nome] = None
+            continue
+        try:
+            if not _RE_GIORNO.fullmatch(valore):
+                raise ValueError
+            date.fromisoformat(valore)
+        except ValueError:
+            return None, None, testi.t(f"server.data_{nome}", ERRORI_DATA[nome])
+        valori[nome] = valore
+    if valori["dal"] and valori["al"] and valori["dal"] > valori["al"]:
+        return None, None, testi.t("server.data_ordine", ERRORI_DATA["ordine"])
+    return valori["dal"], valori["al"], None
 
 
 def _int(valore: str | None, predefinito: int, minimo: int, massimo: int) -> int:
@@ -136,7 +170,10 @@ class Gestore(BaseHTTPRequestHandler):
             return None
 
         if url.path == "/api/categorie":
-            conti = db.conteggi((primo("cerca") or "").strip()[:200] or None)
+            dal, al, errore = _giorni(primo("dal"), primo("al"))
+            if errore:
+                return self._errore(400, errore)
+            conti = db.conteggi((primo("cerca") or "").strip()[:200] or None, dal, al)
             return self._json(200, {
                 "categorie": [
                     {"chiave": k, "nome": testi.t(f"comune.categoria.{k}", nome), "conteggio": conti[k]} for k, nome in db.CATEGORIE
@@ -151,7 +188,10 @@ class Gestore(BaseHTTPRequestHandler):
             cerca = (primo("cerca") or "").strip()[:200] or None
             pagina = _int(primo("pagina"), 1, 1, 100000)
             per_pagina = _int(primo("per_pagina"), 20, 1, 100)
-            return self._json(200, db.elenca(categoria, cerca, pagina, per_pagina))
+            dal, al, errore = _giorni(primo("dal"), primo("al"))
+            if errore:
+                return self._errore(400, errore)
+            return self._json(200, db.elenca(categoria, cerca, pagina, per_pagina, dal, al))
 
         if url.path == "/api/export":
             chiave = self.headers.get("X-Api-Key", "")

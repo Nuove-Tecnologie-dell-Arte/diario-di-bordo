@@ -18,6 +18,137 @@ let nomi = {};
 let richiesta = 0;
 const stato = leggiUrl();
 
+// --- Filtro per data ---------------------------------------------------
+// Nell'URL: `periodo` (oggi, ieri, settimana, mese) oppure `giorno` (AAAA-MM-GG).
+// Le scorciatoie si calcolano qui, nel fuso del browser, e diventano dal/al
+// per l'API; un link condiviso con "oggi" mostra l'oggi di chi lo apre.
+
+function testoArchivio(k, r, p) { return window.T ? window.T(k, r, p) : r; }
+
+const periodi = document.getElementById("periodi");
+const inputGiorno = document.getElementById("giorno");
+const PERIODI = ["oggi", "ieri", "settimana", "mese"];
+const RE_GIORNO = /^\d{4}-\d{2}-\d{2}$/;
+
+function giornoValido(g) {
+  if (!RE_GIORNO.test(g || "")) return false;
+  const [a, m, d] = g.split("-").map(Number);
+  const x = new Date(2000, m - 1, d);
+  x.setFullYear(a);
+  return x.getFullYear() === a && x.getMonth() === m - 1 && x.getDate() === d;
+}
+
+function leggiDataUrl() {
+  const p = new URLSearchParams(location.search);
+  const giorno = p.get("giorno") || "";
+  const periodo = p.get("periodo") || "";
+  if (giornoValido(giorno)) return { periodo: "", giorno };
+  return { periodo: PERIODI.includes(periodo) ? periodo : "", giorno: "" };
+}
+Object.assign(stato, leggiDataUrl());
+
+function scriviDataUrl(p) {
+  if (stato.giorno) p.set("giorno", stato.giorno);
+  else if (stato.periodo) p.set("periodo", stato.periodo);
+}
+
+// Date -> 'AAAA-MM-GG' con le componenti locali (non UTC).
+function isoLocale(d) {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+}
+
+function giorniFa(n) {
+  const d = new Date();
+  d.setHours(12, 0, 0, 0); // a mezzogiorno l'ora legale non fa cambiare giorno
+  d.setDate(d.getDate() - n);
+  return isoLocale(d);
+}
+
+// { dal, al } per l'API, oppure null se non c'è filtro per data.
+function intervalloData() {
+  if (stato.giorno) return { dal: stato.giorno, al: stato.giorno };
+  switch (stato.periodo) {
+    case "oggi": return { dal: giorniFa(0), al: giorniFa(0) };
+    case "ieri": return { dal: giorniFa(1), al: giorniFa(1) };
+    case "settimana": return { dal: giorniFa(6), al: giorniFa(0) };
+    case "mese": return { dal: giorniFa(29), al: giorniFa(0) };
+    default: return null;
+  }
+}
+
+function filtroDataAttivo() {
+  return Boolean(stato.giorno || stato.periodo);
+}
+
+function aggiungiDate(p) {
+  const i = intervalloData();
+  if (i) { p.set("dal", i.dal); p.set("al", i.al); }
+  return p;
+}
+
+function paramConteggi() {
+  const p = new URLSearchParams();
+  if (stato.cerca) p.set("cerca", stato.cerca);
+  aggiungiDate(p);
+  const q = p.toString();
+  return q ? `?${q}` : "";
+}
+
+// Pezzo del riepilogo ("di oggi", "del 1 gennaio 1970"...), vuoto senza filtro.
+function descriviData() {
+  if (stato.giorno) {
+    const giorno = formattaGiorno(stato.giorno);
+    return testoArchivio("archivio.data.riepilogo-giorno", "del {giorno}", { giorno }).replace("{giorno}", giorno);
+  }
+  switch (stato.periodo) {
+    case "oggi": return testoArchivio("archivio.data.riepilogo-oggi", "di oggi");
+    case "ieri": return testoArchivio("archivio.data.riepilogo-ieri", "di ieri");
+    case "settimana": return testoArchivio("archivio.data.riepilogo-settimana", "dell'ultima settimana");
+    case "mese": return testoArchivio("archivio.data.riepilogo-mese", "dell'ultimo mese");
+    default: return "";
+  }
+}
+
+function disegnaData() {
+  for (const b of periodi.querySelectorAll("[data-periodo]")) {
+    b.setAttribute("aria-pressed", String(!stato.giorno && b.dataset.periodo === stato.periodo));
+  }
+  inputGiorno.value = stato.giorno;
+  inputGiorno.max = giorniFa(0);
+  if (stato.giorno) inputGiorno.dataset.attivo = "";
+  else delete inputGiorno.dataset.attivo;
+}
+
+function azzeraData() {
+  stato.periodo = "";
+  stato.giorno = "";
+  disegnaData();
+}
+
+periodi.addEventListener("click", (e) => {
+  const b = e.target.closest("[data-periodo]");
+  if (!b) return;
+  if (!stato.giorno && stato.periodo === b.dataset.periodo) return;
+  stato.periodo = b.dataset.periodo;
+  stato.giorno = "";
+  stato.pagina = 1;
+  disegnaData();
+  aggiornaTutto();
+});
+
+inputGiorno.addEventListener("change", () => {
+  const v = inputGiorno.value;
+  if (v && !giornoValido(v)) return; // data ancora incompleta
+  if (v === stato.giorno) return;
+  stato.giorno = v;
+  stato.periodo = "";
+  stato.pagina = 1;
+  disegnaData();
+  aggiornaTutto();
+});
+
+disegnaData();
+
 function leggiUrl() {
   const p = new URLSearchParams(location.search);
   return {
@@ -32,6 +163,7 @@ function scriviUrl() {
   if (stato.categoria) p.set("categoria", stato.categoria);
   if (stato.cerca) p.set("cerca", stato.cerca);
   if (stato.pagina > 1) p.set("pagina", stato.pagina);
+  scriviDataUrl(p);
   const q = p.toString();
   history.replaceState(null, "", q ? `?${q}` : location.pathname);
 }
@@ -59,7 +191,7 @@ function testoEvidenziato(contenitore, testo, termine) {
 // --- Campionario: barra proporzionale e filtri -------------------------
 
 async function caricaConteggi() {
-  const q = stato.cerca ? `?cerca=${encodeURIComponent(stato.cerca)}` : "";
+  const q = paramConteggi();
   const r = await fetch(`/api/categorie${q}`);
   const dati = await r.json();
   categorie = dati.categorie;
@@ -121,6 +253,7 @@ async function carica({ focus = false } = {}) {
   const p = new URLSearchParams({ pagina: stato.pagina, per_pagina: PER_PAGINA });
   if (stato.categoria) p.set("categoria", stato.categoria);
   if (stato.cerca) p.set("cerca", stato.cerca);
+  aggiungiDate(p);
   elenco.setAttribute("aria-busy", "true");
   try {
     const r = await fetch(`/api/pensieri?${p}`);
@@ -145,6 +278,7 @@ function disegna(dati) {
   const parti = [pensieri(dati.totale)];
   if (stato.categoria) parti.push(nomi[stato.categoria]);
   if (stato.cerca) parti.push(T("archivio.riepilogo_cerca", "con «{cerca}»", { cerca: stato.cerca }));
+  if (filtroDataAttivo()) parti.push(descriviData());
   riepilogo.replaceChildren();
   const b = document.createElement("b");
   b.textContent = parti[0];
@@ -203,13 +337,15 @@ function statoVuoto() {
   li.className = "vuoto";
   const p = document.createElement("p");
   const a = document.createElement("a");
-  if (stato.cerca || stato.categoria) {
+  if (stato.cerca || stato.categoria || filtroDataAttivo()) {
     p.textContent = stato.cerca ? T("archivio.vuoto_cerca", "Nessun pensiero con «{cerca}».", { cerca: stato.cerca }) : T("archivio.vuoto_gruppo", "Questo gruppo non ha ancora scritto.");
+    if (!stato.cerca && filtroDataAttivo()) p.textContent = testoArchivio("archivio.data.vuoto", "Nessun pensiero in questo periodo.");
     a.href = "/archivio";
     a.textContent = T("archivio.vedi_tutti", "Vedi tutti i pensieri");
     a.addEventListener("click", (e) => {
       e.preventDefault();
       stato.categoria = ""; stato.cerca = ""; stato.pagina = 1; cerca.value = "";
+      azzeraData();
       aggiornaTutto();
     });
   } else {
